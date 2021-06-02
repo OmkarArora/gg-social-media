@@ -1,39 +1,47 @@
 .App {
-  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container-header {
+  border-bottom: var(--primary-border);
+  height: var(--height-header);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
+.main {
+  overflow-y: auto;
+  padding: 0 0 0.5rem 0;
+  overflow-x: hidden;
+}
+
+.container-footer {
+  border-top: var(--primary-border);
+}
+
+.container-sidenav {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .App {
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: auto 1fr;
   }
-}
-
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: rgb(112, 76, 182);
-}
-
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
+  .main {
+    margin-left: calc(var(--width-sidenav) + 1rem);
+    margin-top: 1rem;
+    margin-right: 1rem;
   }
-  50% {
-    transform: translateY(10px);
+  .container-footer {
+    display: none;
   }
-  100% {
-    transform: translateY(0px);
+  .container-sidenav {
+    display: block;
+    position: fixed;
+    left: 0;
   }
 }
