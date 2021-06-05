@@ -9,6 +9,7 @@ body {
   /* colors */
   --primary-bg-color: rgba(24, 24, 24, 1);
   --primary-text-color: #fff;
+  --primary-highlight-color: #db2777;
   --grey-color: #888888;
 
   /* sizes */

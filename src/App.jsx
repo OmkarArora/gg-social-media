@@ -4,9 +4,9 @@ import { useNavigate, Routes, Route } from "react-router";
 import "./App.css";
 import { Login } from "./features/authentication/Login";
 import { Counter } from "./features/counter/Counter";
-import { Feed } from "./features/feed/Feed";
 import { Navbar } from "./features/navbar/Navbar";
 import { Sidenav } from "./features/navbar/Sidenav";
+import { Feed } from "./features/posts/Feed";
 
 function App() {
   const { isUserLoggedIn } = useSelector((state) => state.auth);

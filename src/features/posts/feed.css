@@ -1,0 +1,10 @@
+.container-feed {
+  position: relative;
+  height: 100%;
+}
+
+.container-fab {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
