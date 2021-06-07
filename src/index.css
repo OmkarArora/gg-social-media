@@ -1,5 +1,10 @@
 body {
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
+  height: 100vh;
+  width: 100vw;
+
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -11,6 +16,7 @@ body {
   --primary-text-color: #fff;
   --primary-highlight-color: #db2777;
   --grey-color: #888888;
+  --dark-grey-color: #243447;
 
   /* sizes */
   --font-size-icon-navbar-mobile: 1.5rem;

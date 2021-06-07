@@ -1,22 +1,43 @@
 import { Button } from "shoto-ui";
 import { RiQuillPenFill } from "react-icons/ri";
 import "./feed.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NewPostModal } from "./NewPostModal/NewPostModal";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "./postsSlice";
+import { PostCard } from "./PostCard/PostCard";
 
 export const Feed = () => {
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
+
+  const { status, error, posts } = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPosts());
+    }
+  }, [status, dispatch]);
+
   return (
     <div className="container-feed">
-      <div>Posts</div>
-      <div>Post 1</div>
-      <div>Post 2</div>
+      {status === "error" && error && (
+        <div style={{ color: "red" }}>{error}</div>
+      )}
+      {status === "loading" && <div>Loading...</div>}
+      <div className="posts-list">
+        {posts.map((post) => (
+          <PostCard post={post} key={post._id}/>
+        ))}
+      </div>
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
           <RiQuillPenFill />
         </Button>
       </div>
-	  {isNewPostModalVisible && <NewPostModal onClose={() => setNewPostModalVisibility(false)}/>}
+      {isNewPostModalVisible && (
+        <NewPostModal onClose={() => setNewPostModalVisibility(false)} />
+      )}
     </div>
   );
 };

@@ -1,0 +1,20 @@
+.container-postcard {
+  display: flex;
+  background: transparent;
+
+  border-top: 1px solid var(--dark-grey-color);
+
+  --padding-contnt: 0.5rem;
+}
+
+.container-postcard .container-profilePic {
+  padding: var(--padding-contnt);
+}
+
+.container-postcard .container-post-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--padding-contnt);
+  flex-grow: 1;
+}
