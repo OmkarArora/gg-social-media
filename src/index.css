@@ -12,7 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* colors */
-  --primary-bg-color: rgba(24, 24, 24, 1);
+  --primary-bg-color: rgba(0, 0, 0);
   --primary-text-color: #fff;
   --primary-highlight-color: #db2777;
   --grey-color: #888888;
