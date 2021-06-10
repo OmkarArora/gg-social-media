@@ -5,11 +5,12 @@ import { signupUser } from "./authSlice";
 import { Button, Input } from "shoto-ui";
 import { Link } from "react-router-dom";
 import { showAlert } from "../alert/alertSlice";
+import { LoadingModal } from "../loader/LoadingModal/LoadingModal";
 import "./auth.css";
 
 export const Signup = () => {
   const dispatch = useDispatch();
-  const { isUserLoggedIn } = useSelector((state) => state.auth);
+  const { isUserLoggedIn, status } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -110,6 +111,7 @@ export const Signup = () => {
           Sign Up
         </Button>
       </form>
+      {status === "loading" && <LoadingModal />}
     </div>
   );
 };
