@@ -10,7 +10,7 @@ import "./auth.css";
 
 export const Signup = () => {
   const dispatch = useDispatch();
-  const { isUserLoggedIn, status } = useSelector((state) => state.auth);
+  const { isUserLoggedIn, status, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -63,6 +63,12 @@ export const Signup = () => {
       navigate("/");
     }
   }, [isUserLoggedIn, navigate]);
+
+  useEffect(() => {
+    if (status === "error" && error) {
+      dispatch(showAlert({ type: "error", data: error }));
+    }
+  }, [error, status, dispatch]);
 
   return (
     <div className="container-auth">
