@@ -41,3 +41,15 @@ code {
 .icon.icon-fill {
   color: var(--primary-highlight-color);
 }
+
+.container-main-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.container-fab {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}

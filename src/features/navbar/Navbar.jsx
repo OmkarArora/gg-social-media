@@ -6,18 +6,18 @@ import {
   RiNotification3Fill,
   RiNotification3Line,
 } from "react-icons/ri";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./navbar.css";
 
 export const Navbar = () => {
-  // const { activeNavLink } = useNav();
-  const activeNavLink = "home";
+  const { activeTab } = useSelector(state => state.nav);
   return (
     <div className="navbar-mobile">
       <Link to="/">
         <div className="btn-nav">
-          <div className={activeNavLink === "home" ? "icon icon-fill" : "icon"}>
-            {activeNavLink === "home" ? <RiHome5Fill /> : <RiHome5Line />}
+          <div className={activeTab === "home" ? "icon icon-fill" : "icon"}>
+            {activeTab === "home" ? <RiHome5Fill /> : <RiHome5Line />}
           </div>
           {/* <div className="heading">Home</div> */}
         </div>
@@ -26,9 +26,9 @@ export const Navbar = () => {
       <Link to="/search">
         <div className="btn-nav">
           <div
-            className={activeNavLink === "search" ? "icon icon-fill" : "icon"}
+            className={activeTab === "search" ? "icon icon-fill" : "icon"}
           >
-            {activeNavLink === "search" ? <RiSearchFill /> : <RiSearchLine />}
+            {activeTab === "search" ? <RiSearchFill /> : <RiSearchLine />}
           </div>
         </div>
       </Link>
@@ -37,10 +37,10 @@ export const Navbar = () => {
         <div className="btn-nav">
           <div
             className={
-              activeNavLink === "notifications" ? "icon icon-fill" : "icon"
+              activeTab === "notifications" ? "icon icon-fill" : "icon"
             }
           >
-            {activeNavLink === "notifications" ? (
+            {activeTab === "notifications" ? (
               <RiNotification3Fill />
             ) : (
               <RiNotification3Line />

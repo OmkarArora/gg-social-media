@@ -14,6 +14,8 @@ import {
   logoutUser,
 } from "./features/authentication/authSlice";
 import axios from "axios";
+import { Search } from "./features/search/Search";
+import { Notifications } from "./features/notifications/Notifications";
 
 function App() {
   const { isUserLoggedIn, token } = useSelector((state) => state.auth);
@@ -70,6 +72,8 @@ function App() {
       <main className="main">
         <Routes>
           <Route path="/" element={<Feed />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/counter" element={<Counter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
