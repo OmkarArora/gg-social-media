@@ -17,6 +17,7 @@ import axios from "axios";
 import { Search } from "./features/search/Search";
 import { Notifications } from "./features/notifications/Notifications";
 import { Header } from "./features/header/Header";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   const { isUserLoggedIn, token } = useSelector((state) => state.auth);
@@ -67,17 +68,17 @@ function App() {
   return (
     <div className="App">
       <div className="container-header">
-        <Header/>
+        <Header />
       </div>
       <div className="container-sidenav">
         <Sidenav />
       </div>
       <main className="main">
         <Routes>
-          <Route path="/" element={<Feed />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/counter" element={<Counter />} />
+          <PrivateRoute path="/" element={<Feed />} />
+          <PrivateRoute path="/search" element={<Search />} />
+          <PrivateRoute path="/notifications" element={<Notifications />} />
+          <PrivateRoute path="/counter" element={<Counter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

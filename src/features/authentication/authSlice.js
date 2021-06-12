@@ -38,14 +38,19 @@ export const signupUser = createAsyncThunk(
   }
 );
 
+let login = JSON.parse(localStorage.getItem("ggLogin"));
+let local_token = login?.token || null;
+let local_userData = login?.userData || null;
+let userLoginStatus = local_token ? true : false;
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
     status: "idle",
     error: null,
-    isUserLoggedIn: false,
-    token: null,
-    userData: null,
+    isUserLoggedIn: userLoginStatus,
+    token: local_token,
+    userData: local_userData,
   },
   reducers: {
     setLoginDetails: (state, action) => {
