@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import { Search } from "./features/search/Search";
 import { Notifications } from "./features/notifications/Notifications";
+import { Header } from "./features/header/Header";
 
 function App() {
   const { isUserLoggedIn, token } = useSelector((state) => state.auth);
@@ -65,7 +66,9 @@ function App() {
 
   return (
     <div className="App">
-      <div className="container-header">header</div>
+      <div className="container-header">
+        <Header/>
+      </div>
       <div className="container-sidenav">
         <Sidenav />
       </div>

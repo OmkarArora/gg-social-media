@@ -54,6 +54,7 @@ export const authSlice = createSlice({
       state.isUserLoggedIn = true;
     },
     logoutUser: (state, action) => {
+      localStorage?.removeItem("ggLogin");
       state.token = null;
       state.userData = null;
       state.isUserLoggedIn = false;
@@ -77,7 +78,9 @@ export const authSlice = createSlice({
     },
     [loginUser.rejected]: (state, action) => {
       state.status = "error";
-      state.error = action.payload.errorMessage;
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
     },
     [signupUser.pending]: (state) => {
       state.status = "loading";
@@ -96,7 +99,9 @@ export const authSlice = createSlice({
     },
     [signupUser.rejected]: (state, action) => {
       state.status = "error";
-      state.error = action.payload.errorMessage;
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
     },
   },
 });
