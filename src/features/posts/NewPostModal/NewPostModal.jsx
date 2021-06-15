@@ -2,8 +2,10 @@ import { Button, Avatar } from "shoto-ui";
 import { RiCloseLine } from "react-icons/ri";
 import "./newPostModal.css";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const NewPostModal = ({onClose}) => {
+  const {userData} = useSelector(state => state.auth);
   const [postText, setPostText] = useState("");
   const totalCharacters = 100;
   const availableCharacters = totalCharacters - postText.length;
@@ -27,7 +29,7 @@ export const NewPostModal = ({onClose}) => {
           <div className="container-avatar">
             <Avatar
               alt="John Doe"
-              src="https://randomuser.me/api/portraits/men/75.jpg"
+              src={userData?.profileImage}
             />
           </div>
           <textarea

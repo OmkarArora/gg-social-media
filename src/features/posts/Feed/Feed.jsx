@@ -1,11 +1,11 @@
 import { Button } from "shoto-ui";
 import { RiQuillPenFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
-import { NewPostModal } from "./NewPostModal/NewPostModal";
+import { NewPostModal } from "../NewPostModal/NewPostModal";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "./postsSlice";
-import { PostCard } from "./PostCard/PostCard";
-import { setActiveNavTab } from "../navbar/navSlice";
+import { fetchPosts } from "../postsSlice";
+import { PostCard } from "../PostCard/PostCard";
+import { setActiveNavTab } from "../../navbar/navSlice";
 import "./feed.css";
 
 export const Feed = () => {

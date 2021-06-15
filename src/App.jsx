@@ -5,9 +5,9 @@ import "./App.css";
 import { Login } from "./features/authentication/Login";
 import { Signup } from "./features/authentication/Signup";
 import { Counter } from "./features/counter/Counter";
-import { Navbar } from "./features/navbar/Navbar";
-import { Sidenav } from "./features/navbar/Sidenav";
-import { Feed } from "./features/posts/Feed";
+import { Navbar } from "./features/navbar/Navbar/Navbar";
+import { Sidenav } from "./features/navbar/Navbar/Sidenav";
+import { Feed } from "./features/posts/Feed/Feed";
 import { Alert } from "./features/alert/Alert";
 import {
   setLoginDetails,
