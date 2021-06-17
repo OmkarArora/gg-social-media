@@ -18,6 +18,7 @@ import { Search } from "./features/search/Search";
 import { Notifications } from "./features/notifications/Notifications";
 import { Header } from "./features/header/Header";
 import PrivateRoute from "./PrivateRoute";
+import { UserProfile } from "./features/user/UserProfile";
 
 function App() {
   const { isUserLoggedIn, token } = useSelector((state) => state.auth);
@@ -81,6 +82,7 @@ function App() {
           <PrivateRoute path="/counter" element={<Counter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/:username" element={<UserProfile />} />
         </Routes>
         <Alert />
       </main>
