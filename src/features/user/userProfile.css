@@ -1,0 +1,22 @@
+.container-userProfile {
+  display: flex;
+  flex-direction: column;
+}
+
+.img-banner {
+  width: 100%;
+  height: auto;
+}
+
+.container-userInfo {
+  padding: 0 1rem;
+  position: relative;
+  top: -2.5rem;
+}
+
+.container-userInfo .container-avatar {
+  width: max-content;
+  border-radius: 50%;
+
+  border: 5px solid black;
+}
