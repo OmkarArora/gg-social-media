@@ -38,6 +38,10 @@ code {
     monospace;
 }
 
+.text-grey {
+  color: #6e767d;
+}
+
 .container-main-content {
   position: relative;
   height: 100%;

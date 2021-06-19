@@ -4,17 +4,17 @@
 
   border-top: 1px solid var(--dark-grey-color);
 
-  --padding-contnt: 0.5rem;
+  --padding-content: 0.5rem 1rem;
 }
 
 .container-postcard .container-profilePic {
-  padding: var(--padding-contnt);
+  padding: var(--padding-content);
 }
 
 .container-postcard .container-post-content {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: var(--padding-contnt);
+  padding: var(--padding-content);
   flex-grow: 1;
 }

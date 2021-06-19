@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import { fetchUserFromUsername } from "./userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./userSlice";
-import { Avatar } from "shoto-ui";
+import { Avatar, Button } from "shoto-ui";
+import { logoutUser } from "../authentication/authSlice";
+import { PostCard } from "../posts/PostCard/PostCard";
 import "./userProfile.css";
 
 export const UserProfile = () => {
@@ -12,7 +14,6 @@ export const UserProfile = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.user);
-  console.log({ user });
 
   useEffect(() => {
     if (!state) {
@@ -29,27 +30,40 @@ export const UserProfile = () => {
         <img src={user.bannerImage} alt="user banner" className="img-banner" />
       )}
       <div className="container-userInfo">
-        <div className="container-avatar">
-          <Avatar
-            alt={user?.name}
-            src={user?.profileImage}
-            height="5rem"
-            width="5rem"
-          />
+        <div className="profile-toprow">
+          <div className="container-avatar">
+            <Avatar
+              alt={user?.name}
+              src={user?.profileImage}
+              height="5rem"
+              width="5rem"
+            />
+          </div>
+          <Button rounded size="medium" onClick={() => dispatch(logoutUser())}>
+            Log Out
+          </Button>
         </div>
-        <div>{user?.name}</div>
-        <div>@{user?.username}</div>
+
+        <div className="profile-name">{user?.name}</div>
+        <div className="profile-username text-grey">@{user?.username}</div>
         <div>
           <div>{user?.location}</div>
           <div>{user?.birthDate}</div>
         </div>
-        <div>
-          <div>{user?.following} Following</div>
-          <div>{user?.followers} Followers</div>
+        <div className="profile-followDetails">
+          <div>{user?.following.length} <span className="text-grey">Following</span></div>
+          <div>{user?.followers.length} <span className="text-grey">Followers</span></div>
         </div>
-        <div>
-          <h3>Posts</h3>
-        </div>
+      </div>
+
+      <div>
+        {user && user.posts.length > 0 && (
+          <div className="posts-list">
+            {user.posts.map((post) => (
+              <PostCard key={post._id} post={post} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

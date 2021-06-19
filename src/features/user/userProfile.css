@@ -3,6 +3,15 @@
   flex-direction: column;
 }
 
+.profile-toprow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-toprow button {
+  align-self: flex-end;
+}
+
 .img-banner {
   width: 100%;
   height: auto;
@@ -19,4 +28,9 @@
   border-radius: 50%;
 
   border: 5px solid black;
+}
+
+.profile-followDetails {
+  display: flex;
+  gap: 1rem;
 }
