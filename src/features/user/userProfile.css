@@ -17,6 +17,16 @@
   height: auto;
 }
 
+.banner-placeholder {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 1;
+  background-color: var(--primary-highlight-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .container-userInfo {
   padding: 0 1rem;
   position: relative;

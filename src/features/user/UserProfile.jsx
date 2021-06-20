@@ -29,12 +29,13 @@ export const UserProfile = () => {
       {user && user.bannerImage && (
         <img src={user.bannerImage} alt="user banner" className="img-banner" />
       )}
+      {user && !user.bannerImage && <div className="banner-placeholder">{user.name}</div>}
       <div className="container-userInfo">
         <div className="profile-toprow">
           <div className="container-avatar">
             <Avatar
               alt={user?.name}
-              src={user.profileImage?user.profileImage:""}
+              src={user && user.profileImage?user.profileImage:""}
               height="5rem"
               width="5rem"
             />
