@@ -26,7 +26,7 @@ export const UserProfile = () => {
 
   return (
     <div className="container-userProfile">
-      {user && (
+      {user && user.bannerImage && (
         <img src={user.bannerImage} alt="user banner" className="img-banner" />
       )}
       <div className="container-userInfo">
@@ -34,7 +34,7 @@ export const UserProfile = () => {
           <div className="container-avatar">
             <Avatar
               alt={user?.name}
-              src={user?.profileImage}
+              src={user.profileImage?user.profileImage:""}
               height="5rem"
               width="5rem"
             />

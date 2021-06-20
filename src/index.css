@@ -38,6 +38,15 @@ code {
     monospace;
 }
 
+.avatar-custom .shoto-avatar-fallback {
+  font-size: 1rem !important;
+  color: var(--primary-bg-color);
+}
+
+.avatar-custom a {
+  text-decoration: none;
+}
+
 .text-grey {
   color: #6e767d;
 }

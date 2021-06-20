@@ -9,14 +9,15 @@ export const Header = () => {
   return (
     <header className="header">
       <div>gg</div>
-      <div>
+      <div className="avatar-custom">
         {user && (
           <Link to={`/${user.username}`} state={{ user }}>
             <Avatar
-              src={user.profileImage}
-              alt={`${user.name}`}
+              src={user.profileImage?user.profileImage:""}
+              alt={user.name}
               height="2rem"
               width="2rem"
+              bgColor="yellow"
             />
           </Link>
         )}
