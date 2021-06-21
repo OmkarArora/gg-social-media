@@ -58,8 +58,8 @@ code {
 }
 
 .container-fab {
-  position: absolute;
-  bottom: 1rem;
+  position: fixed;
+  bottom: calc(var(--height-header) + 1rem);
   right: 1rem;
 }
 
