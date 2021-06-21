@@ -7,19 +7,23 @@ import { fetchPosts } from "../postsSlice";
 import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
 import "./feed.css";
+import { setupAuthHeaderForServiceCalls } from "../../../helper";
 
 export const Feed = () => {
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
-
   const { status, error, posts } = useSelector((state) => state.posts);
+  const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (status === "idle") {
+      if (token) {
+        setupAuthHeaderForServiceCalls(token);
+      }
       dispatch(fetchPosts());
     }
-  }, [status, dispatch]);
+  }, [token, status, dispatch]);
 
   useEffect(() => {
     dispatch(setActiveNavTab({ activeTab: "home" }));

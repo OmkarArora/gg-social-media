@@ -19,6 +19,7 @@ import { Notifications } from "./features/notifications/Notifications";
 import { Header } from "./features/header/Header";
 import PrivateRoute from "./PrivateRoute";
 import { UserProfile } from "./features/user/UserProfile";
+import {setupAuthHeaderForServiceCalls} from "./helper";
 
 function App() {
   const { isUserLoggedIn, token } = useSelector((state) => state.auth);
@@ -58,13 +59,6 @@ function App() {
       }
     );
   }, [dispatch, navigate]);
-
-  function setupAuthHeaderForServiceCalls(token) {
-    if (token) {
-      return (axios.defaults.headers.common["Authorization"] = token);
-    }
-    delete axios.defaults.headers.common["Authorization"];
-  }
 
   return (
     <div className="App">
