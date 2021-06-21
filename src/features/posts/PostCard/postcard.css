@@ -3,6 +3,7 @@
   background: transparent;
   border-top: 1px solid var(--dark-grey-color);
   --padding-content: 0.5rem 1rem;
+  padding: 0.2rem 0;
 }
 
 .container-postcard .container-profilePic {
