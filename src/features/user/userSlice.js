@@ -29,6 +29,9 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload.user;
     },
+    addPost: (state, action) => {
+      state.user.posts = [action.payload.post, ...state.user.posts];
+    }
   },
   extraReducers: {
     [fetchUserFromUsername.pending]: (state) => {
@@ -47,5 +50,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, addPost } = userSlice.actions;
 export default userSlice.reducer;
