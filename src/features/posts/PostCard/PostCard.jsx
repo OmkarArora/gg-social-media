@@ -6,7 +6,7 @@ export const PostCard = ({ post }) => {
     <div className="container-postcard">
       <div className="container-profilePic">
         <Avatar
-          src={post.author.profileImage}
+          src={post.author.profileImage?post.author.profileImage:""}
           alt={`${post.author.name}`}
           height="3rem"
           width="3rem"

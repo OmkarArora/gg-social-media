@@ -46,7 +46,10 @@ export const NewPostModal = ({ onClose }) => {
         </div>
         <div className="body">
           <div className="container-avatar">
-            <Avatar alt="John Doe" src={userData?.profileImage} />
+          <Avatar
+              alt={userData?.name}
+              src={userData && userData.profileImage?userData.profileImage:""}
+            />
           </div>
           <textarea
             placeholder="What's happening?"
