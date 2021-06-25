@@ -5,3 +5,27 @@
 .user-list a {
   text-decoration: none;
 }
+
+.container-search-input {
+  text-align: center;
+  padding: 0.8rem 0;
+}
+
+.container-search-input input {
+  width: 70%;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-family: inherit;
+  padding: 0.4rem 1rem;
+  outline: none;
+  border: none;
+  background-color: var(--dark-grey-color);
+  color: var(--primary-text-color);
+}
+
+.search-placeholder {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}

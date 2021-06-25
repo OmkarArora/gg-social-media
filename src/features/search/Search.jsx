@@ -42,14 +42,25 @@ export const Search = () => {
 
   return (
     <div className="container-main-content">
-      Search here
-      <input type="text" onChange={handleChange} value={searchText} />
+      <div className="container-search-input">
+        <input
+          type="text"
+          onChange={handleChange}
+          value={searchText}
+          placeholder="Search gg"
+        />
+      </div>
       {searchResults && searchResults.length > 0 && (
         <div className="user-list">
           {searchResults.map((item) => (
-            <Link to={`/${item.username}`}><UserCard user={item} key={item._id} /></Link>
+            <Link to={`/${item.username}`}>
+              <UserCard user={item} key={item._id} />
+            </Link>
           ))}
         </div>
+      )}
+      {searchResults.length === 0 && (
+        <div className="search-placeholder">You can find people here</div>
       )}
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
