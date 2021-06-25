@@ -8,13 +8,26 @@ export function setupAuthHeaderForServiceCalls(token) {
 }
 
 export function getRelativeTime(current, previous) {
-  var msPerMinute = 60 * 1000;
-  var msPerHour = msPerMinute * 60;
-  var msPerDay = msPerHour * 24;
-  var msPerMonth = msPerDay * 30;
-  // var msPerYear = msPerDay * 365;
+  let msPerMinute = 60 * 1000;
+  let msPerHour = msPerMinute * 60;
+  let msPerDay = msPerHour * 24;
+  let msPerMonth = msPerDay * 30;
+  let elapsed = current - previous;
 
-  var elapsed = current - previous;
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   if (elapsed < msPerMinute) {
     return Math.round(elapsed / 1000) + "s";
@@ -24,16 +37,14 @@ export function getRelativeTime(current, previous) {
     return Math.round(elapsed / msPerHour) + "h";
   } else if (elapsed < msPerMonth) {
     if (elapsed / msPerDay <= 6) return Math.round(elapsed / msPerDay) + "d";
-    else return "" + previous.getDate() + previous.getMonth();
+    else
+      return `${new Date(previous).getDate()} ${
+        monthNames[new Date(previous).getMonth()]
+      }`;
   }
-  return "" + previous.getDate() + previous.getMonth();
-  // else if (elapsed < msPerYear) {
-  //     return Math.round(elapsed/msPerMonth) + ' months ago';
-  // }
-
-  // else {
-  //     return Math.round(elapsed/msPerYear ) + ' years ago';
-  // }
+  return `${new Date(previous).getDate()} ${
+    monthNames[new Date(previous).getMonth()]
+  }`;
 }
 
 export function debounce(func, timeout = 500) {

@@ -36,9 +36,8 @@ export const Feed = () => {
       )}
       {status === "loading" && <div>Loading...</div>}
       <div className="posts-list">
-        {posts.map((post) => (
-          <PostCard post={post} key={post._id} />
-        ))}
+        {posts.length > 0 &&
+          posts.map((post) => <PostCard post={post} key={post._id} />)}
       </div>
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
