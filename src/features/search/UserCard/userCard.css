@@ -1,0 +1,21 @@
+.user-search-card {
+  display: flex;
+  padding: 0.8rem;
+  gap: 1rem;
+  border-top: 1px solid var(--dark-grey-color);
+}
+
+.user-search-card .shoto-avatar-fallback {
+  font-size: 1rem !important;
+}
+
+.user-search-card .user-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+}
+
+.user-search-card .user-details .user-name {
+  font-size: 1.2rem;
+  color: var(--primary-text-color);
+}

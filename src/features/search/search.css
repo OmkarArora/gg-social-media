@@ -1,0 +1,7 @@
+.user-list .user-search-card:last-child {
+  border-bottom: 1px solid var(--dark-grey-color);
+}
+
+.user-list a {
+  text-decoration: none;
+}
