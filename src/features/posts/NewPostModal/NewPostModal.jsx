@@ -1,9 +1,9 @@
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendPost } from "../postsSlice";
 import { Button, Avatar } from "shoto-ui";
 import { RiCloseLine } from "react-icons/ri";
 import "./newPostModal.css";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { sendPost } from "../postsSlice";
 
 export const NewPostModal = ({ onClose }) => {
   const { userData } = useSelector((state) => state.auth);
@@ -11,6 +11,11 @@ export const NewPostModal = ({ onClose }) => {
   const [postText, setPostText] = useState("");
   const totalCharacters = 100;
   const availableCharacters = totalCharacters - postText.length;
+
+  const postTextarea = useRef(null);
+  useEffect(() => {
+    postTextarea.current.focus();
+  }, []);
 
   const warningColor = "rgb(255,216,0)";
 
@@ -46,15 +51,18 @@ export const NewPostModal = ({ onClose }) => {
         </div>
         <div className="body">
           <div className="container-avatar">
-          <Avatar
+            <Avatar
               alt={userData?.name}
-              src={userData && userData.profileImage?userData.profileImage:""}
+              src={
+                userData && userData.profileImage ? userData.profileImage : ""
+              }
             />
           </div>
           <textarea
             placeholder="What's happening?"
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
+            ref={postTextarea}
           />
         </div>
         <div className="footer">
