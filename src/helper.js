@@ -23,8 +23,7 @@ export function getRelativeTime(current, previous) {
   } else if (elapsed < msPerDay) {
     return Math.round(elapsed / msPerHour) + "h";
   } else if (elapsed < msPerMonth) {
-    if (elapsed / msPerDay <= 6)
-      return Math.round(elapsed / msPerDay) + "d";
+    if (elapsed / msPerDay <= 6) return Math.round(elapsed / msPerDay) + "d";
     else return "" + previous.getDate() + previous.getMonth();
   }
   return "" + previous.getDate() + previous.getMonth();
@@ -35,4 +34,16 @@ export function getRelativeTime(current, previous) {
   // else {
   //     return Math.round(elapsed/msPerYear ) + ' years ago';
   // }
+}
+
+export function debounce(func, timeout = 500) {
+  let timer;
+  return function (...args) {
+    const context = this;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      timer = null;
+      func.apply(context, args);
+    }, timeout);
+  };
 }
