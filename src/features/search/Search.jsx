@@ -53,8 +53,8 @@ export const Search = () => {
       {searchResults && searchResults.length > 0 && (
         <div className="user-list">
           {searchResults.map((item) => (
-            <Link to={`/${item.username}`}>
-              <UserCard user={item} key={item._id} />
+            <Link to={`/${item.username}`} key={item._id}>
+              <UserCard user={item} />
             </Link>
           ))}
         </div>
