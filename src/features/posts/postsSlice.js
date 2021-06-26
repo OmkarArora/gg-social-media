@@ -32,14 +32,33 @@ export const sendPost = createAsyncThunk(
   }
 );
 
+export const fetchPostDetails = createAsyncThunk(
+  "posts/fetchPostDetails",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND}/post-details/${postId}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
     status: "idle",
     error: null,
     posts: [],
+    detailsPagePost: null,
   },
-  reducers: {},
+  reducers: {
+    setDetailsPagePost: (state, action) => {
+      state.detailsPagePost = action.payload.detailsPagePost;
+    },
+  },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
       state.status = "loading";
@@ -67,8 +86,21 @@ export const postsSlice = createSlice({
         state.error = action.payload.errorMessage;
       else state.error = "Something went wrong";
     },
+    [fetchPostDetails.pending]: (state) => {
+      state.status = "loading";
+    },
+    [fetchPostDetails.fulfilled]: (state, action) => {
+      state.detailsPagePost = action.payload.post;
+      state.status = "fulfilled";
+    },
+    [fetchPostDetails.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
   },
 });
 
-// export const {  } = postsSlice.actions;
+export const { setDetailsPagePost } = postsSlice.actions;
 export default postsSlice.reducer;

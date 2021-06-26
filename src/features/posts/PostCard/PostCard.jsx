@@ -16,19 +16,21 @@ export const PostCard = ({ post }) => {
           />
         </Link>
       </div>
-      <div className="container-post-content">
-        <div className="author-details">
-          <div>{post.author.name}</div>
-          <div className="text-grey">
-            @{post.author.username} <span className="separator-dot">.</span>{" "}
-            {getRelativeTime(
-              new Date().getTime(),
-              new Date(post.updatedAt).getTime()
-            )}
+      <Link to={`/post/${post._id}`} state={{ post }}>
+        <div className="container-post-content">
+          <div className="author-details">
+            <div>{post.author.name}</div>
+            <div className="text-grey">
+              @{post.author.username} <span className="separator-dot">.</span>{" "}
+              {getRelativeTime(
+                new Date().getTime(),
+                new Date(post.updatedAt).getTime()
+              )}
+            </div>
           </div>
+          <div className="post-content">{post.content.text}</div>
         </div>
-        <div className="post-content">{post.content.text}</div>
-      </div>
+      </Link>
     </div>
   );
 };

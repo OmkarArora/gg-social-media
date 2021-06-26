@@ -6,6 +6,11 @@
   padding: 0.2rem 0;
 }
 
+.container-postcard a {
+  text-decoration: none;
+  color: var(--primary-text-color);
+}
+
 .container-postcard .container-profilePic {
   padding: var(--padding-content);
 }
