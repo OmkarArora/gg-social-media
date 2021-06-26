@@ -40,6 +40,14 @@ export const UserProfile = () => {
     }
   }, [feed, user, dispatch]);
 
+  const getProfileImage = () => {
+    if (user) {
+      if (user.profileImage) return user.profileImage;
+      return "./broken";
+    }
+    return "./broken";
+  };
+
   return (
     <div className="container-userProfile">
       {user && user.bannerImage && (
@@ -53,16 +61,16 @@ export const UserProfile = () => {
           <div className="container-avatar">
             <Avatar
               alt={user?.name}
-              src={user && user.profileImage ? user.profileImage : ""}
+              src={getProfileImage()}
               height="5rem"
               width="5rem"
+              key={user && user._id}
             />
           </div>
           <Button rounded size="medium" onClick={() => dispatch(logoutUser())}>
             Log Out
           </Button>
         </div>
-
         <div className="profile-name">{user?.name}</div>
         <div className="profile-username text-grey">@{user?.username}</div>
         <div>
@@ -80,7 +88,6 @@ export const UserProfile = () => {
           </div>
         </div>
       </div>
-
       <div>
         {user && user.posts.length > 0 && (
           <div className="posts-list">
