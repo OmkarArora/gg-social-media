@@ -22,6 +22,10 @@
   font-size: 1.5rem !important;
 }
 
+.container-profilePic a {
+  text-decoration: none;
+}
+
 .author-details {
   display: flex;
   gap: 0.5rem;
