@@ -28,7 +28,14 @@ export const PostCard = ({ post }) => {
               )}
             </div>
           </div>
-          <div className="post-content">{post.content.text}</div>
+          <div className="post-content">
+            {post.content.text}
+            {post.content.media.length > 0 && (
+              <div className="container-postImage">
+                <img src={post.content.media[0]} alt="post" />
+              </div>
+            )}
+          </div>
         </div>
       </Link>
     </div>

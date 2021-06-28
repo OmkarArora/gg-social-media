@@ -43,3 +43,13 @@
   bottom: 5px;
   margin: 0 0.1rem;
 }
+
+.container-postImage {
+  padding: 1rem 0 0 0;
+}
+
+.container-postImage img {
+  max-width: 100%;
+  max-height: 400px;
+  width: auto;
+}
