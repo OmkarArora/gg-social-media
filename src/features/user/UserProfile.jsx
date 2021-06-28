@@ -16,6 +16,8 @@ export const UserProfile = () => {
   const { user } = useSelector((state) => state.user);
   const { posts: feed } = useSelector((state) => state.posts);
 
+  const { userData: loggedInUser } = useSelector((state) => state.auth);
+
   useEffect(() => {
     if (!state) {
       dispatch(fetchUserFromUsername(username));
@@ -27,15 +29,17 @@ export const UserProfile = () => {
 
   useEffect(() => {
     if (user && feed.length > 0) {
-      let postPresent = false;
-      for (let i = 0; i < user.posts.length; i++) {
-        if (user.posts[0]._id === feed[0]._id) {
-          postPresent = true;
-          break;
+      for (let i = feed.length-1; i >= 0; i--) {
+        let postPresent = false;
+        for (let j = 0; j < user.posts.length; j++) {
+          if (user.posts[j]._id === feed[i]._id) {
+            postPresent = true;
+            break;
+          }
         }
-      }
-      if (!postPresent && feed[0].author._id === user._id) {
-        dispatch(addPost({ post: feed[0] }));
+        if (!postPresent && user._id === feed[i].author._id) {
+          dispatch(addPost({ post: feed[i] }));
+        }
       }
     }
   }, [feed, user, dispatch]);
@@ -67,9 +71,15 @@ export const UserProfile = () => {
               key={user && user._id}
             />
           </div>
-          <Button rounded size="medium" onClick={() => dispatch(logoutUser())}>
-            Log Out
-          </Button>
+          {loggedInUser && user && loggedInUser._id === user._id && (
+            <Button
+              rounded
+              size="medium"
+              onClick={() => dispatch(logoutUser())}
+            >
+              Log Out
+            </Button>
+          )}
         </div>
         <div className="profile-name">{user?.name}</div>
         <div className="profile-username text-grey">@{user?.username}</div>
