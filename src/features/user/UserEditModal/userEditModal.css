@@ -1,0 +1,50 @@
+.container-user-editModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: var(--z-modal);
+}
+
+.user-editModal {
+  background-color: var(--primary-bg-color);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.editModal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editModal-header .header-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.3rem;
+}
+
+.editModal-header .icon-close {
+  font-size: 2rem;
+  position: relative;
+  top: 5px;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
+  .user-editModal {
+    height: 400px;
+    max-width: 80vw;
+    min-width: 600px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

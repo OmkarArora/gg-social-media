@@ -1,11 +1,12 @@
 import { useParams, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addPost, fetchUserFromUsername } from "./userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./userSlice";
 import { Avatar, Button } from "shoto-ui";
 import { logoutUser } from "../authentication/authSlice";
 import { PostCard } from "../posts/PostCard/PostCard";
+import { UserEditModal } from "./UserEditModal/UserEditModal";
 import "./userProfile.css";
 
 export const UserProfile = () => {
@@ -18,6 +19,8 @@ export const UserProfile = () => {
 
   const { userData: loggedInUser } = useSelector((state) => state.auth);
 
+  const [editProfileModalOpen, setEditProfileModal] = useState(false);
+
   useEffect(() => {
     if (!state) {
       dispatch(fetchUserFromUsername(username));
@@ -29,7 +32,7 @@ export const UserProfile = () => {
 
   useEffect(() => {
     if (user && feed.length > 0) {
-      for (let i = feed.length-1; i >= 0; i--) {
+      for (let i = feed.length - 1; i >= 0; i--) {
         let postPresent = false;
         for (let j = 0; j < user.posts.length; j++) {
           if (user.posts[j]._id === feed[i]._id) {
@@ -72,14 +75,24 @@ export const UserProfile = () => {
             />
           </div>
           {loggedInUser && user && loggedInUser._id === user._id && (
-            <Button
-              rounded
-              size="medium"
-              onClick={() => dispatch(logoutUser())}
-            >
-              Log Out
-            </Button>
+            <>
+              <Button
+                rounded
+                size="medium"
+                onClick={() => dispatch(logoutUser())}
+              >
+                Log Out
+              </Button>
+              <Button
+                rounded
+                size="medium"
+                onClick={() => setEditProfileModal((prev) => !prev)}
+              >
+                Edit Profile
+              </Button>
+            </>
           )}
+          {editProfileModalOpen && <UserEditModal setEditProfileModal={setEditProfileModal}/>}
         </div>
         <div className="profile-name">{user?.name}</div>
         <div className="profile-username text-grey">@{user?.username}</div>
