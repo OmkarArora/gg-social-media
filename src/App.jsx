@@ -21,6 +21,7 @@ import PrivateRoute from "./PrivateRoute";
 import { UserProfile } from "./features/user/UserProfile";
 import { setupAuthHeaderForServiceCalls } from "./helper";
 import { PostPage } from "./features/posts/PostPage/PostPage";
+import { fetchUserFromUsername } from "./features/user/userSlice";
 
 function App() {
   const { isUserLoggedIn, token } = useSelector((state) => state.auth);
@@ -39,6 +40,7 @@ function App() {
       dispatch(
         setLoginDetails({ token: login.token, userData: login.userData })
       );
+      dispatch(fetchUserFromUsername(login.userData.username));
     }
   }, [dispatch]);
 

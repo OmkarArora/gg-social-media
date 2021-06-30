@@ -24,7 +24,7 @@ export const NewPostModal = ({ onClose }) => {
   const uploadImage = async () => {
     let axiosInstance = axios.create();
     delete axiosInstance.defaults.headers.common["Authorization"];
-    
+
     try {
       const formData = new FormData();
       formData.append("file", selectedFile);

@@ -31,7 +31,7 @@ export const userSlice = createSlice({
     },
     addPost: (state, action) => {
       state.user.posts = [action.payload.post, ...state.user.posts];
-    }
+    },
   },
   extraReducers: {
     [fetchUserFromUsername.pending]: (state) => {
@@ -39,6 +39,11 @@ export const userSlice = createSlice({
     },
     [fetchUserFromUsername.fulfilled]: (state, action) => {
       state.user = action.payload.user;
+      if (localStorage) {
+        let login = JSON.parse(localStorage.getItem("ggLogin"));
+        login.userData = action.payload.user;
+        localStorage.setItem("ggLogin", JSON.stringify(login));
+      }
       state.status = "fulfilled";
     },
     [fetchUserFromUsername.rejected]: (state, action) => {
