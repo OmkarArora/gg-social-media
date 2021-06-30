@@ -92,7 +92,6 @@ export const UserProfile = () => {
               </Button>
             </>
           )}
-          {editProfileModalOpen && <UserEditModal setEditProfileModal={setEditProfileModal}/>}
         </div>
         <div className="profile-name">{user?.name}</div>
         <div className="profile-username text-grey">@{user?.username}</div>
@@ -120,6 +119,9 @@ export const UserProfile = () => {
           </div>
         )}
       </div>
+      {editProfileModalOpen && user && (
+        <UserEditModal setEditProfileModal={setEditProfileModal} user={user} profileImage={getProfileImage()}/>
+      )}
     </div>
   );
 };
