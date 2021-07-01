@@ -18,6 +18,24 @@ export const fetchUserFromUsername = createAsyncThunk(
   }
 );
 
+export const editUserDetails = createAsyncThunk(
+  "user/editUserDetails",
+  async (userUpdates, { rejectWithValue }) => {
+    try {
+      console.log({...userUpdates});
+      // const response = await axios.post(
+      //   `${process.env.REACT_APP_BACKEND}/users/username`,
+      //   {
+      //     username,
+      //   }
+      // );
+      // return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {

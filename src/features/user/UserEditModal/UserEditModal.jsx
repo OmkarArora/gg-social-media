@@ -11,8 +11,51 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
   const [location, setLocation] = useState(user.location ? user.location : "");
   const [website, setWebsite] = useState(user.website ? user.website : "");
   const [birthDate, setBirthDate] = useState(
-    user.birthDate ? user.birthDate : ""
+    user.birthDate ? user.birthDate : null
   );
+
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const saveUserDetails = () => {
+    let updates = {};
+    updates.name = name;
+    updates.bio = bio;
+    updates.location = location;
+    updates.website = website;
+    if(birthDate){
+      updates.birthDate = birthDate.toISOString();
+    }
+  };
+
+  const getBirthDate = () => {
+    let date = null;
+    if (birthDate) {
+      date = new Date(birthDate);
+      date.setDate(date.getDate());
+      date = date.toISOString().substr(0, 10);
+      return date;
+    }
+  };
+
+  const getCurrentDate = () => {
+    let date = new Date();
+    date.setDate(date.getDate());
+    date = date.toISOString().substr(0, 10);
+    return date;
+  }
 
   return (
     <div className="container-user-editModal">
@@ -28,7 +71,7 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
             <span>Edit profile</span>
           </div>
           <div>
-            <Button rounded size="medium">
+            <Button rounded size="medium" onClick={saveUserDetails}>
               Save
             </Button>
           </div>
@@ -84,13 +127,23 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
                 onInputChange={setWebsite}
                 value={website}
               />
-              <ControlledInput
-                heading="Birth date"
-                maxLength={20}
-                type="input"
-                onInputChange={setBirthDate}
-                value={birthDate}
-              />
+              <div className="container-editBirthDate">
+                <div className="header-birthDate">Birth date</div>
+                <div className="container-dateEdit">
+                  {birthDate &&
+                    `${
+                      monthNames[birthDate.getMonth()]
+                    } ${birthDate.getDate()}, ${birthDate.getFullYear()}`}
+                  <input
+                    type="date"
+                    max={getCurrentDate()}
+                    defaultValue={getBirthDate()}
+                    onChange={(e) => {
+                      setBirthDate(new Date(e.target.value));
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

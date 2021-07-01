@@ -47,6 +47,26 @@
   overflow-y: auto;
 }
 
+.header-birthDate {
+  color: var(--grey-color);
+}
+
+.container-editBirthDate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.container-editBirthDate input[type="date"] {
+  font-family: inherit;
+}
+
+.container-editBirthDate .container-dateEdit {
+  display: flex;
+  gap: 1rem;
+}
+
 @media only screen and (min-width: 768px) {
   .container-user-editModal {
     display: flex;
