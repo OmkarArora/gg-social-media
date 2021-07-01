@@ -55,7 +55,7 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
                 key={user._id}
               />
             </div>
-            <div>
+            <div className="container-editInputs">
               <ControlledInput
                 heading="Name"
                 maxLength={50}

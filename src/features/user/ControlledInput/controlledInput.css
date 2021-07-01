@@ -1,9 +1,28 @@
-.controleed-input {
+.controlled-input {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--dark-grey-color);
+  border-radius: 0.5rem;
 }
 
 .header-controlledInput {
   display: flex;
   justify-content: space-between;
+  color: var(--grey-color);
+}
+
+.controlled-input input,
+.controlled-input textarea {
+  width: 100%;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  border: none;
+  outline: none;
+  font-size: 1.3rem;
+}
+
+.controlled-input textarea {
+  resize: none;
 }
