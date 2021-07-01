@@ -4,6 +4,9 @@ import { addPost, fetchUserFromUsername } from "./userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./userSlice";
 import { Avatar, Button } from "shoto-ui";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { RiCake2Line, RiCalendar2Line } from "react-icons/ri";
+import { BsLink45Deg } from "react-icons/bs";
 import { logoutUser } from "../authentication/authSlice";
 import { PostCard } from "../posts/PostCard/PostCard";
 import { UserEditModal } from "./UserEditModal/UserEditModal";
@@ -55,6 +58,28 @@ export const UserProfile = () => {
     return "./broken";
   };
 
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const getBirthDate = (birthDate) => {
+    birthDate = new Date(birthDate);
+    return `${
+      monthNames[birthDate.getMonth()]
+    } ${birthDate.getDate()}, ${birthDate.getFullYear()}`;
+  };
+
   return (
     <div className="container-userProfile">
       {user && user.bannerImage && (
@@ -95,9 +120,56 @@ export const UserProfile = () => {
         </div>
         <div className="profile-name">{user?.name}</div>
         <div className="profile-username text-grey">@{user?.username}</div>
-        <div>
-          <div>{user?.location}</div>
-          <div>{user?.birthDate}</div>
+        {user?.bio && <div className="profile-bio">{user.bio}</div>}
+        <div className="text-grey profile-personalInfo">
+          {user?.location && (
+            <div className="container-personalInfo">
+              <span className="icon">
+                <HiOutlineLocationMarker />
+              </span>
+              <span className="info-content">{user.location}</span>
+            </div>
+          )}
+
+          {user?.website && (
+            <div className="container-personalInfo">
+              <span className="icon">
+                <BsLink45Deg />
+              </span>
+              <span className="info-content">
+                <a href={user.website} target="_blank" rel="noreferrer">
+                  {user.website}
+                </a>
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="text-grey profile-personalInfo">
+          {user?.birthDate && (
+            <div className="container-personalInfo">
+              <span className="icon">
+                <RiCake2Line />
+              </span>
+              <span className="info-content">
+                {getBirthDate(user.birthDate)}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="text-grey profile-personalInfo">
+          {user?.createdAt && (
+            <div className="container-personalInfo">
+              <span className="icon">
+                <RiCalendar2Line />
+              </span>
+              <span className="info-content">
+                Joined{" "}
+                {`${
+                  monthNames[new Date(user.createdAt).getMonth()]
+                }, ${new Date(user.createdAt).getFullYear()}`}
+              </span>
+            </div>
+          )}
         </div>
         <div className="profile-followDetails">
           <div>
@@ -110,7 +182,7 @@ export const UserProfile = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="profile-posts">
         {user && user.posts.length > 0 && (
           <div className="posts-list">
             {user.posts &&
@@ -120,7 +192,11 @@ export const UserProfile = () => {
         )}
       </div>
       {editProfileModalOpen && user && (
-        <UserEditModal setEditProfileModal={setEditProfileModal} user={user} profileImage={getProfileImage()}/>
+        <UserEditModal
+          setEditProfileModal={setEditProfileModal}
+          user={user}
+          profileImage={getProfileImage()}
+        />
       )}
     </div>
   );

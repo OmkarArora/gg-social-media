@@ -21,6 +21,7 @@
   border: none;
   outline: none;
   font-size: 1.3rem;
+  font-family: inherit;
 }
 
 .controlled-input textarea {

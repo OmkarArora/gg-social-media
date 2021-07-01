@@ -4,6 +4,8 @@ import { Avatar } from "shoto-ui";
 import "./userEditModal.css";
 import { ControlledInput } from "../ControlledInput/ControlledInput";
 import { useState } from "react";
+import { updateUserDetails } from "../userSlice";
+import { useDispatch } from "react-redux";
 
 export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
   const [name, setName] = useState(user.name);
@@ -13,6 +15,8 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
   const [birthDate, setBirthDate] = useState(
     user.birthDate ? user.birthDate : null
   );
+
+  const dispatch = useDispatch();
 
   const monthNames = [
     "Jan",
@@ -36,8 +40,10 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
     updates.location = location;
     updates.website = website;
     if(birthDate){
-      updates.birthDate = birthDate.toISOString();
+      updates.birthDate = new Date(birthDate).toISOString();
     }
+    dispatch(updateUserDetails({userUpdates: updates, userId: user._id}));
+    setEditProfileModal(false);
   };
 
   const getBirthDate = () => {
@@ -132,8 +138,8 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
                 <div className="container-dateEdit">
                   {birthDate &&
                     `${
-                      monthNames[birthDate.getMonth()]
-                    } ${birthDate.getDate()}, ${birthDate.getFullYear()}`}
+                      monthNames[new Date(birthDate).getMonth()]
+                    } ${new Date(birthDate).getDate()}, ${new Date(birthDate).getFullYear()}`}
                   <input
                     type="date"
                     max={getCurrentDate()}

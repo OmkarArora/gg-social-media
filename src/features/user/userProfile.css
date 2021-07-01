@@ -36,11 +36,45 @@
 .container-userInfo .container-avatar {
   width: max-content;
   border-radius: 50%;
-
   border: 5px solid black;
 }
 
 .profile-followDetails {
   display: flex;
   gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.profile-bio {
+  margin: 0.5rem 0;
+}
+
+.profile-personalInfo {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.profile-personalInfo .icon {
+  font-size: 1.2rem;
+}
+
+.profile-personalInfo a {
+  color: var(--primary-highlight-color);
+}
+
+.container-personalInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.info-content {
+  position: relative;
+  bottom: 2px;
+}
+
+.profile-posts {
+  position: relative;
+  top: -1.5rem;
 }

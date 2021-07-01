@@ -65,11 +65,13 @@ code {
   bottom: calc(var(--height-header) + 1rem);
   right: 1rem;
 }
+.icon {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
 
 .icon.icon-fill {
   color: var(--primary-highlight-color);
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
 }
 
 button {

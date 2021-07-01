@@ -24,15 +24,15 @@ import { PostPage } from "./features/posts/PostPage/PostPage";
 import { fetchUserFromUsername } from "./features/user/userSlice";
 
 function App() {
-  const { isUserLoggedIn, token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isUserLoggedIn) {
-      navigate("/login");
-    }
-  }, [isUserLoggedIn, navigate]);
+  // useEffect(() => {
+  //   if (!isUserLoggedIn) {
+  //     navigate("/login");
+  //   }
+  // }, [isUserLoggedIn, navigate]);
 
   useEffect(() => {
     let login = JSON.parse(localStorage.getItem("ggLogin"));
