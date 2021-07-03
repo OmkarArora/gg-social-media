@@ -38,6 +38,57 @@ export const signupUser = createAsyncThunk(
   }
 );
 
+export const updateUserDetails = createAsyncThunk(
+  "auth/updateUserDetails",
+  async ({userUpdates, userId}, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/users/${userId}`,
+        {
+          userUpdates
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const followUser = createAsyncThunk(
+  "auth/followUser",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/users/follow`,
+        {
+          userId
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const unfollowUser = createAsyncThunk(
+  "auth/unfollowUser",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/users/unfollow`,
+        {
+          userId
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 let login = JSON.parse(localStorage.getItem("ggLogin"));
 let local_token = login?.token || null;
 let local_userData = login?.userData || null;
@@ -103,6 +154,60 @@ export const authSlice = createSlice({
       );
     },
     [signupUser.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
+    [updateUserDetails.pending]: (state) => {
+      state.status = "loading";
+    },
+    [updateUserDetails.fulfilled]: (state, action) => {
+      state.userData = action.payload.user;
+      if (localStorage) {
+        let login = JSON.parse(localStorage.getItem("ggLogin"));
+        login.userData = action.payload.user;
+        localStorage.setItem("ggLogin", JSON.stringify(login));
+      }
+      state.status = "fulfilled";
+    },
+    [updateUserDetails.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
+    [followUser.pending]: (state) => {
+      state.status = "loading";
+    },
+    [followUser.fulfilled]: (state, action) => {
+      state.userData = action.payload.user;
+      if (localStorage) {
+        let login = JSON.parse(localStorage.getItem("ggLogin"));
+        login.userData = action.payload.user;
+        localStorage.setItem("ggLogin", JSON.stringify(login));
+      }
+      state.status = "fulfilled";
+    },
+    [unfollowUser.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
+    [unfollowUser.pending]: (state) => {
+      state.status = "loading";
+    },
+    [unfollowUser.fulfilled]: (state, action) => {
+      state.userData = action.payload.user;
+      if (localStorage) {
+        let login = JSON.parse(localStorage.getItem("ggLogin"));
+        login.userData = action.payload.user;
+        localStorage.setItem("ggLogin", JSON.stringify(login));
+      }
+      state.status = "fulfilled";
+    },
+    [followUser.rejected]: (state, action) => {
       state.status = "error";
       if (action.payload && action.payload.errorMessage)
         state.error = action.payload.errorMessage;

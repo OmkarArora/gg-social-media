@@ -12,7 +12,7 @@ import { setupAuthHeaderForServiceCalls } from "../../../helper";
 export const Feed = () => {
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
   const { status, error, posts } = useSelector((state) => state.posts);
-  const { token } = useSelector((state) => state.auth);
+  const { userData, token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -24,6 +24,10 @@ export const Feed = () => {
       dispatch(fetchPosts());
     }
   }, [token, status, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [userData.following, dispatch])
 
   useEffect(() => {
     dispatch(setActiveNavTab({ activeTab: "home" }));

@@ -7,7 +7,7 @@ import { Avatar, Button } from "shoto-ui";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiCake2Line, RiCalendar2Line } from "react-icons/ri";
 import { BsLink45Deg } from "react-icons/bs";
-import { logoutUser } from "../authentication/authSlice";
+import { logoutUser, unfollowUser, followUser } from "../authentication/authSlice";
 import { PostCard } from "../posts/PostCard/PostCard";
 import { UserEditModal } from "./UserEditModal/UserEditModal";
 import "./userProfile.css";
@@ -19,9 +19,7 @@ export const UserProfile = () => {
 
   const { user } = useSelector((state) => state.user);
   const { posts: feed } = useSelector((state) => state.posts);
-
   const { userData: loggedInUser } = useSelector((state) => state.auth);
-
   const [editProfileModalOpen, setEditProfileModal] = useState(false);
 
   useEffect(() => {
@@ -32,6 +30,12 @@ export const UserProfile = () => {
       else dispatch(fetchUserFromUsername(username));
     }
   }, [dispatch, state, username]);
+
+  useEffect(() => {
+    if (loggedInUser && user && loggedInUser._id === user._id) {
+      dispatch(setUser({ user: loggedInUser }));
+    }
+  }, [user, loggedInUser, dispatch]);
 
   useEffect(() => {
     if (user && feed.length > 0) {
@@ -116,6 +120,29 @@ export const UserProfile = () => {
                 Edit Profile
               </Button>
             </>
+          )}
+          {loggedInUser && user && loggedInUser._id !== user._id ? (
+            loggedInUser.following.includes(user._id) ? (
+              <Button
+                rounded
+                size="medium"
+                onClick={() => dispatch(unfollowUser(user._id))}
+              >
+                Following
+              </Button>
+            ) : (
+              <span className="button-outline">
+                <Button
+                  rounded
+                  size="medium"
+                  onClick={() => dispatch(followUser(user._id))}
+                >
+                  Follow
+                </Button>
+              </span>
+            )
+          ) : (
+            <></>
           )}
         </div>
         <div className="profile-name">{user?.name}</div>

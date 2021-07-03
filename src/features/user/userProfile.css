@@ -6,6 +6,7 @@
 .profile-toprow {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 }
 
 .profile-toprow button {

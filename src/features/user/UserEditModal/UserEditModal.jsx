@@ -4,7 +4,7 @@ import { Avatar } from "shoto-ui";
 import "./userEditModal.css";
 import { ControlledInput } from "../ControlledInput/ControlledInput";
 import { useState } from "react";
-import { updateUserDetails } from "../userSlice";
+import { updateUserDetails } from "../../authentication/authSlice";
 import { useDispatch } from "react-redux";
 
 export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
