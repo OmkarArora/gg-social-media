@@ -1,9 +1,19 @@
+.postcard-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0.2rem 0;
+}
+
+.container-post-actions {
+  display: flex;
+  justify-content: center;
+}
+
 .container-postcard {
   display: flex;
   background: transparent;
   border-top: 1px solid var(--dark-grey-color);
   --padding-content: 0.5rem 1rem;
-  padding: 0.2rem 0;
 }
 
 .container-postcard a {

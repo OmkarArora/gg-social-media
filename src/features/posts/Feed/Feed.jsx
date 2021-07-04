@@ -3,7 +3,7 @@ import { RiQuillPenFill } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { NewPostModal } from "../NewPostModal/NewPostModal";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../postsSlice";
+import { fetchPosts, likePost, unlikePost } from "../postsSlice";
 import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
 import "./feed.css";
@@ -12,7 +12,7 @@ import { setupAuthHeaderForServiceCalls } from "../../../helper";
 export const Feed = () => {
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
   const { status, error, posts } = useSelector((state) => state.posts);
-  const { userData, token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -26,10 +26,6 @@ export const Feed = () => {
   }, [token, status, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchPosts());
-  }, [userData.following, dispatch])
-
-  useEffect(() => {
     dispatch(setActiveNavTab({ activeTab: "home" }));
   });
 
@@ -41,7 +37,7 @@ export const Feed = () => {
       {status === "loading" && <div>Loading...</div>}
       <div className="posts-list">
         {posts.length > 0 &&
-          posts.map((post) => <PostCard post={post} key={post._id} />)}
+          posts.map((post) => <PostCard post={post} key={post._id} likePost={likePost} unlikePost={unlikePost}/>)}
       </div>
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>

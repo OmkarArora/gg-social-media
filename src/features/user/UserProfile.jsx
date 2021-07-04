@@ -1,6 +1,6 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { addPost, fetchUserFromUsername } from "./userSlice";
+import { addPost, fetchUserFromUsername, likePost, unlikePost } from "./userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./userSlice";
 import { Avatar, Button } from "shoto-ui";
@@ -31,11 +31,11 @@ export const UserProfile = () => {
     }
   }, [dispatch, state, username]);
 
-  useEffect(() => {
-    if (loggedInUser && user && loggedInUser._id === user._id) {
-      dispatch(setUser({ user: loggedInUser }));
-    }
-  }, [user, loggedInUser, dispatch]);
+  // useEffect(() => {
+  //   if (loggedInUser && user && loggedInUser._id === user._id) {
+  //     dispatch(setUser({ user: loggedInUser }));
+  //   }
+  // }, [user, loggedInUser, dispatch]);
 
   useEffect(() => {
     if (user && feed.length > 0) {
@@ -214,7 +214,7 @@ export const UserProfile = () => {
           <div className="posts-list">
             {user.posts &&
               user.posts.length > 0 &&
-              user.posts.map((post) => <PostCard key={post._id} post={post} />)}
+              user.posts.map((post) => <PostCard key={post._id} post={post} likePost={likePost} unlikePost={unlikePost}/>)}
           </div>
         )}
       </div>

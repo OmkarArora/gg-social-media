@@ -1,6 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const refreshFromUsername = createAsyncThunk(
+  "auth/refreshFromUsername",
+  async (username, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/users/username`,
+        {
+          username,
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
@@ -40,12 +57,12 @@ export const signupUser = createAsyncThunk(
 
 export const updateUserDetails = createAsyncThunk(
   "auth/updateUserDetails",
-  async ({userUpdates, userId}, { rejectWithValue }) => {
+  async ({ userUpdates, userId }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND}/users/${userId}`,
         {
-          userUpdates
+          userUpdates,
         }
       );
       return response.data;
@@ -62,7 +79,7 @@ export const followUser = createAsyncThunk(
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND}/users/follow`,
         {
-          userId
+          userId,
         }
       );
       return response.data;
@@ -79,7 +96,7 @@ export const unfollowUser = createAsyncThunk(
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND}/users/unfollow`,
         {
-          userId
+          userId,
         }
       );
       return response.data;
@@ -114,6 +131,14 @@ export const authSlice = createSlice({
       state.token = null;
       state.userData = null;
       state.isUserLoggedIn = false;
+    },
+    setUserDetails: (state, action) => {
+      state.userData = action.payload.userData;
+    },
+    editPost: (state, action) => {
+      state.userData.posts = state.userData.posts.map((item) =>
+        item._id === action.payload.post._id ? action.payload.post : item
+      );
     },
   },
   extraReducers: {
@@ -213,8 +238,22 @@ export const authSlice = createSlice({
         state.error = action.payload.errorMessage;
       else state.error = "Something went wrong";
     },
+    [refreshFromUsername.pending]: (state) => {
+      state.status = "loading";
+    },
+    [refreshFromUsername.fulfilled]: (state, action) => {
+      state.userData = action.payload.user;
+      state.status = "fulfilled";
+    },
+    [refreshFromUsername.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
   },
 });
 
-export const { setLoginDetails, logoutUser } = authSlice.actions;
+export const { setLoginDetails, logoutUser, setUserDetails, editPost } =
+  authSlice.actions;
 export default authSlice.reducer;

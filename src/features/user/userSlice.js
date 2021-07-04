@@ -18,6 +18,40 @@ export const fetchUserFromUsername = createAsyncThunk(
   }
 );
 
+export const likePost = createAsyncThunk(
+  "user/likePost",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/posts/like`,
+        {
+          postId,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const unlikePost = createAsyncThunk(
+  "user/unlikePost",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND}/posts/unlike`,
+        {
+          postId,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -47,7 +81,38 @@ export const userSlice = createSlice({
         state.error = action.payload.errorMessage;
       else state.error = "Something went wrong";
     },
-    
+    [likePost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [likePost.fulfilled]: (state, action) => {
+      const updatedPost = action.payload.post;
+      state.user.posts = state.user.posts.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      );
+      state.status = "fulfilled";
+    },
+    [likePost.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
+    [unlikePost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [unlikePost.fulfilled]: (state, action) => {
+      const updatedPost = action.payload.post;
+      state.user.posts = state.user.posts.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      );
+      state.status = "fulfilled";
+    },
+    [unlikePost.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
   },
 });
 
