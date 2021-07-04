@@ -119,6 +119,7 @@ export const authSlice = createSlice({
     isUserLoggedIn: userLoginStatus,
     token: local_token,
     userData: local_userData,
+    shouldUpdatePost: false,
   },
   reducers: {
     setLoginDetails: (state, action) => {
@@ -135,11 +136,9 @@ export const authSlice = createSlice({
     setUserDetails: (state, action) => {
       state.userData = action.payload.userData;
     },
-    editPost: (state, action) => {
-      state.userData.posts = state.userData.posts.map((item) =>
-        item._id === action.payload.post._id ? action.payload.post : item
-      );
-    },
+    setUpdatePostStatus: (state, action) => {
+      state.shouldUpdatePost = action.payload.updateStatus;
+    }
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
@@ -254,6 +253,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setLoginDetails, logoutUser, setUserDetails, editPost } =
+export const { setLoginDetails, logoutUser, setUserDetails, setUpdatePostStatus } =
   authSlice.actions;
 export default authSlice.reducer;

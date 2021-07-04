@@ -1,12 +1,16 @@
+import { useEffect } from "react";
 import { Avatar } from "shoto-ui";
 import { getRelativeTime } from "../../../helper";
 import { Link } from "react-router-dom";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import "./postcard.css";
 import { useDispatch, useSelector } from "react-redux";
+import { refreshFromUsername, setUpdatePostStatus } from "../../authentication/authSlice";
+import { fetchPosts, setUpdateFeedPostStatus } from "../../posts/postsSlice";
+import "./postcard.css";
 
 export const PostCard = ({ post, likePost, unlikePost }) => {
-  const { userData } = useSelector((state) => state.auth);
+  const { userData, shouldUpdatePost } = useSelector((state) => state.auth);
+  const { shouldUpdateFeedPost } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
   const getHeartIcon = () => {
@@ -17,6 +21,13 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
             className="icon icon-fill"
             onClick={() => {
               dispatch(unlikePost(post._id));
+              if (post.author._id === userData._id) {
+                if (window.location.pathname === "/") {
+                  dispatch(setUpdatePostStatus({ updateStatus: true }));
+                } else {
+                  dispatch(setUpdateFeedPostStatus({ updateStatus: true }));
+                }
+              }
             }}
           >
             <AiFillHeart />
@@ -25,15 +36,37 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
       }
     }
     return (
-      <span className="icon">
-        <AiOutlineHeart
-          onClick={() => {
-            dispatch(likePost(post._id));
-          }}
-        />
+      <span
+        className="icon"
+        onClick={() => {
+          dispatch(likePost(post._id));
+          if (post.author._id === userData._id) {
+            if (window.location.pathname === "/") {
+              dispatch(setUpdatePostStatus({ updateStatus: true }));
+            } else {
+              dispatch(setUpdateFeedPostStatus({ updateStatus: true }));
+            }
+          }
+        }}
+      >
+        <AiOutlineHeart />
       </span>
     );
   };
+
+  useEffect(() => {
+    if (shouldUpdatePost) {
+      dispatch(refreshFromUsername(userData.username));
+      dispatch(setUpdatePostStatus({ updateStatus: false }));
+    }
+  }, [userData.username, shouldUpdatePost, dispatch]);
+
+  useEffect(() => {
+    if (shouldUpdateFeedPost) {
+      dispatch(fetchPosts());
+      dispatch(setUpdateFeedPostStatus({ updateStatus: false }));
+    }
+  }, [shouldUpdateFeedPost, dispatch]);
 
   return (
     <div className="postcard-wrapper">
