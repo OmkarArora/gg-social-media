@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import { Avatar } from "shoto-ui";
-import { getRelativeTime } from "../../../helper";
+import { copyTextToClipboard, getRelativeTime } from "../../../helper";
 import { Link } from "react-router-dom";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshFromUsername, setUpdatePostStatus } from "../../authentication/authSlice";
+import {
+  refreshFromUsername,
+  setUpdatePostStatus,
+} from "../../authentication/authSlice";
 import { fetchPosts, setUpdateFeedPostStatus } from "../../posts/postsSlice";
 import "./postcard.css";
+import { showAlert } from "../../alert/alertSlice";
 
 export const PostCard = ({ post, likePost, unlikePost }) => {
   const { userData, shouldUpdatePost } = useSelector((state) => state.auth);
@@ -68,6 +72,20 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
     }
   }, [shouldUpdateFeedPost, dispatch]);
 
+  const copyPostLink = async () => {
+    const postLink = window.location.href + `post/${post._id}`;
+    let message = await copyTextToClipboard(postLink);
+    dispatch(
+      showAlert({
+        type: message,
+        data:
+          message === "success"
+            ? "Post link copied to clipboard"
+            : "Something went wrong",
+      })
+    );
+  };
+
   return (
     <div className="postcard-wrapper">
       <div className="container-postcard">
@@ -104,7 +122,12 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
           </div>
         </Link>
       </div>
-      <div className="container-post-actions">{getHeartIcon()}</div>
+      <div className="container-post-actions text-grey">
+        {getHeartIcon()}
+        <span className="icon" onClick={copyPostLink}>
+          <AiOutlineShareAlt />
+        </span>
+      </div>
     </div>
   );
 };

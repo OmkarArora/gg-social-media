@@ -58,3 +58,39 @@ export function debounce(func, timeout = 500) {
     }, timeout);
   };
 }
+
+function fallbackCopyTextToClipboard(text) {
+  let textArea = document.createElement("textarea");
+  textArea.value = text;
+
+  // Avoid scrolling to bottom
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.position = "fixed";
+
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    let successful = document.execCommand("copy");
+    if (successful) return "success";
+    return "error";
+  } catch (err) {
+    return "error";
+  } finally {
+    document.body.removeChild(textArea);
+  }
+}
+export async function copyTextToClipboard(text) {
+  if (!navigator.clipboard) {
+    let message = fallbackCopyTextToClipboard(text);
+    return message;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    return "success";
+  } catch (error) {
+    return "error";
+  }
+}
