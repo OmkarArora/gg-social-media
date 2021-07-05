@@ -34,7 +34,7 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
               }
             }}
           >
-            <AiFillHeart />
+            <AiFillHeart />{post.likes.length===0?"": <span className="like-count">{` ${post.likes.length}`}</span>}
           </span>
         );
       }
@@ -53,7 +53,7 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
           }
         }}
       >
-        <AiOutlineHeart />
+        <AiOutlineHeart />{post.likes.length===0?"": <span className="like-count">{` ${post.likes.length}`}</span>}
       </span>
     );
   };

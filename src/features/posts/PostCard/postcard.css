@@ -11,6 +11,11 @@
   gap: 3rem;
 }
 
+.like-count {
+  position: relative;
+  bottom: 2px;
+}
+
 .container-postcard {
   display: flex;
   background: transparent;
