@@ -7,13 +7,14 @@
 .container-post-actions {
   display: flex;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   gap: 3rem;
 }
 
 .like-count {
   position: relative;
-  bottom: 2px;
+  bottom: 4px;
+  font-size: 1rem;
 }
 
 .container-postcard {
