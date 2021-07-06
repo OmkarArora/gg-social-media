@@ -135,6 +135,10 @@ export const authSlice = createSlice({
     },
     setUserDetails: (state, action) => {
       state.userData = action.payload.userData;
+      localStorage?.setItem(
+        "ggLogin",
+        JSON.stringify({ userData: state.userData, token: state.token })
+      );
     },
     setUpdatePostStatus: (state, action) => {
       state.shouldUpdatePost = action.payload.updateStatus;

@@ -1,13 +1,23 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { addPost, fetchUserFromUsername, likePost, unlikePost } from "./userSlice";
+import {
+  addPost,
+  fetchUserFromUsername,
+  likePost,
+  unlikePost,
+} from "./userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./userSlice";
 import { Avatar, Button } from "shoto-ui";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiCake2Line, RiCalendar2Line } from "react-icons/ri";
 import { BsLink45Deg } from "react-icons/bs";
-import { logoutUser, unfollowUser, followUser } from "../authentication/authSlice";
+import {
+  logoutUser,
+  unfollowUser,
+  followUser,
+  setUserDetails,
+} from "../authentication/authSlice";
 import { PostCard } from "../posts/PostCard/PostCard";
 import { UserEditModal } from "./UserEditModal/UserEditModal";
 import "./userProfile.css";
@@ -31,11 +41,11 @@ export const UserProfile = () => {
     }
   }, [dispatch, state, username]);
 
-  // useEffect(() => {
-  //   if (loggedInUser && user && loggedInUser._id === user._id) {
-  //     dispatch(setUser({ user: loggedInUser }));
-  //   }
-  // }, [user, loggedInUser, dispatch]);
+  useEffect(() => {
+    if (user && loggedInUser && user._id === loggedInUser._id) {
+      dispatch(setUserDetails({ userData: user }));
+    }
+  }, [user, loggedInUser, dispatch]);
 
   useEffect(() => {
     if (user && feed.length > 0) {
@@ -214,7 +224,14 @@ export const UserProfile = () => {
           <div className="posts-list">
             {user.posts &&
               user.posts.length > 0 &&
-              user.posts.map((post) => <PostCard key={post._id} post={post} likePost={likePost} unlikePost={unlikePost}/>)}
+              user.posts.map((post) => (
+                <PostCard
+                  key={post._id}
+                  post={post}
+                  likePost={likePost}
+                  unlikePost={unlikePost}
+                />
+              ))}
           </div>
         )}
       </div>

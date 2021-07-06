@@ -92,3 +92,8 @@ button {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 }
+
+.highlight {
+  color: var(--primary-highlight-color);
+  font-weight: 400;
+}

@@ -1,0 +1,24 @@
+.container-notifications .notification-card:last-child {
+  border-bottom: 1px solid var(--dark-grey-color);
+}
+
+.notification-card {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--dark-grey-color);
+}
+
+.notification-card .icon {
+  font-size: 1.3rem;
+}
+
+.notification-card .shoto-avatar-fallback {
+  font-size: 1rem !important;
+}
+
+.notification-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
