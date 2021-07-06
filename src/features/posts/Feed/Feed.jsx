@@ -8,6 +8,7 @@ import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
 import "./feed.css";
 import { setupAuthHeaderForServiceCalls } from "../../../helper";
+import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
 
 export const Feed = () => {
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
@@ -34,7 +35,7 @@ export const Feed = () => {
       {status === "error" && error && (
         <div style={{ color: "red" }}>{error}</div>
       )}
-      {status === "loading" && <div>Loading...</div>}
+      {status === "loading" && <LoadingModal/>}
       <div className="posts-list">
         {posts.length > 0 &&
           posts.map((post) => <PostCard post={post} key={post._id} likePost={likePost} unlikePost={unlikePost}/>)}

@@ -21,13 +21,14 @@ import {
 import { PostCard } from "../posts/PostCard/PostCard";
 import { UserEditModal } from "./UserEditModal/UserEditModal";
 import "./userProfile.css";
+import { LoadingModal } from "../loader/LoadingModal/LoadingModal";
 
 export const UserProfile = () => {
   const { username } = useParams();
   const { state } = useLocation();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.user);
+  const { user, status } = useSelector((state) => state.user);
   const { posts: feed } = useSelector((state) => state.posts);
   const { userData: loggedInUser } = useSelector((state) => state.auth);
   const [editProfileModalOpen, setEditProfileModal] = useState(false);
@@ -96,6 +97,7 @@ export const UserProfile = () => {
 
   return (
     <div className="container-userProfile">
+      {status === "loading" && <LoadingModal />}
       {user && user.bannerImage && (
         <img src={user.bannerImage} alt="user banner" className="img-banner" />
       )}
