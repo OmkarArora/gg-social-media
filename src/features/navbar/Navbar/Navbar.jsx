@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 
 export const Navbar = () => {
-  const { activeTab } = useSelector(state => state.nav);
+  const { activeTab } = useSelector((state) => state.nav);
   return (
     <div className="navbar-mobile">
       <Link to="/">
@@ -19,16 +19,27 @@ export const Navbar = () => {
           <div className={activeTab === "home" ? "icon icon-fill" : "icon"}>
             {activeTab === "home" ? <RiHome5Fill /> : <RiHome5Line />}
           </div>
-          {/* <div className="heading">Home</div> */}
+          <div
+            className={
+              activeTab === "home" ? "nav-heading highlight" : "nav-heading"
+            }
+          >
+            Home
+          </div>
         </div>
       </Link>
 
       <Link to="/search">
         <div className="btn-nav">
-          <div
-            className={activeTab === "search" ? "icon icon-fill" : "icon"}
-          >
+          <div className={activeTab === "search" ? "icon icon-fill" : "icon"}>
             {activeTab === "search" ? <RiSearchFill /> : <RiSearchLine />}
+          </div>
+          <div
+            className={
+              activeTab === "search" ? "nav-heading highlight" : "nav-heading"
+            }
+          >
+            Search
           </div>
         </div>
       </Link>
@@ -45,6 +56,15 @@ export const Navbar = () => {
             ) : (
               <RiNotification3Line />
             )}
+          </div>
+          <div
+            className={
+              activeTab === "notifications"
+                ? "nav-heading highlight"
+                : "nav-heading"
+            }
+          >
+            Notifications
           </div>
         </div>
       </Link>

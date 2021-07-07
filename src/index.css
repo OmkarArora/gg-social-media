@@ -3,7 +3,7 @@ body {
   padding: 0;
   margin: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -34,6 +34,10 @@ body {
 
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
+}
+
+#root {
+  height: 100%;
 }
 
 code {
@@ -96,4 +100,10 @@ button {
 .highlight {
   color: var(--primary-highlight-color);
   font-weight: 400;
+}
+
+@media only screen and (min-width: 768px) {
+  body {
+    --width-sidenav: 14rem;
+  }
 }

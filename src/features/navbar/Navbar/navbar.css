@@ -8,9 +8,9 @@
 
 .navbar-mobile .btn-nav {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .navbar-mobile a {
@@ -24,8 +24,8 @@
   font-size: var(--font-size-icon-navbar-mobile);
 }
 
-.btn-nav .heading {
-  font-size: var(--font-size-text-navbar-mobile);
+.nav-heading {
+  display: none;
 }
 
 .btn-nav-guides .heading {
@@ -46,5 +46,23 @@
 .sidenav .navbar-mobile {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .nav-heading {
+    display: block;
+    font-size: 1.2rem;
+    position: relative;
+    bottom: 2px;
+  }
+
+  .navbar-mobile {
+    align-items: flex-start;
+  }
+
+  .btn-nav:hover {
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
 }
