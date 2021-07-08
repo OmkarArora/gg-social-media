@@ -86,7 +86,7 @@ export const NewPostModal = ({ onClose }) => {
   return (
     <div className="modal-newPost">
       <div className="container-newPost">
-        <div className="header">
+        <div className="header-newPost">
           <div className="icon icon-close" onClick={() => onClose()}>
             <RiCloseLine />
           </div>
@@ -100,7 +100,7 @@ export const NewPostModal = ({ onClose }) => {
             </Button>
           </div>
         </div>
-        <div className="body">
+        <div className="body-newPost">
           <div className="container-avatar">
             <Avatar
               alt={userData?.name}

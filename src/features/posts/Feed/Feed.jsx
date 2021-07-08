@@ -36,6 +36,7 @@ export const Feed = () => {
         <div style={{ color: "red" }}>{error}</div>
       )}
       {status === "loading" && <LoadingModal/>}
+      <div className="page-heading">Feed</div>
       <div className="posts-list">
         {posts.length > 0 &&
           posts.map((post) => <PostCard post={post} key={post._id} likePost={likePost} unlikePost={unlikePost}/>)}

@@ -1,0 +1,13 @@
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.logo span {
+  background-color: var(--primary-highlight-color);
+  width: max-content;
+  padding: 0.5rem;
+  border-radius: 2rem;
+}

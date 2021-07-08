@@ -9,6 +9,11 @@
   align-items: flex-end;
 }
 
+.profile-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .profile-toprow button {
   align-self: flex-end;
 }

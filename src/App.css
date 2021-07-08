@@ -25,9 +25,13 @@
 
 @media only screen and (min-width: 768px) {
   .App {
+    border-right: var(--primary-border);
+    border-left: var(--primary-border);
+
     max-height: 98vh;
     overflow: hidden;
-    width: 700px;
+    max-width: 900px;
+    /* width: 768px; */
     display: grid;
     grid-template-rows: auto 1fr;
 
@@ -36,8 +40,13 @@
     transform: translate(-50%, 0);
   }
 
+  .container-header {
+    display: none;
+  }
+
   .main {
     margin-left: var(--width-sidenav);
+    z-index: -1;
   }
 
   .container-footer {
@@ -48,9 +57,14 @@
     display: block;
     position: fixed;
     left: 0;
+    z-index: -1;
   }
 
   .container-main-content {
     height: 100%;
+  }
+
+  .container-fab {
+    display: none;
   }
 }

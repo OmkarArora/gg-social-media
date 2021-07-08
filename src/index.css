@@ -102,8 +102,18 @@ button {
   font-weight: 400;
 }
 
+.page-heading {
+  display: none;
+}
+
 @media only screen and (min-width: 768px) {
   body {
     --width-sidenav: 14rem;
+  }
+
+  .page-heading {
+    display: block;
+    padding: 1rem;
+    font-size: 1.5rem;
   }
 }

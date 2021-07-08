@@ -16,7 +16,7 @@ import {
   logoutUser,
   unfollowUser,
   followUser,
-  setUserDetails,
+  // setUserDetails,
 } from "../authentication/authSlice";
 import { PostCard } from "../posts/PostCard/PostCard";
 import { UserEditModal } from "./UserEditModal/UserEditModal";
@@ -44,7 +44,7 @@ export const UserProfile = () => {
 
   useEffect(() => {
     if (user && loggedInUser && user._id === loggedInUser._id) {
-      dispatch(setUserDetails({ userData: user }));
+      dispatch(setUser({ user: loggedInUser }));
     }
   }, [user, loggedInUser, dispatch]);
 
@@ -116,14 +116,7 @@ export const UserProfile = () => {
             />
           </div>
           {loggedInUser && user && loggedInUser._id === user._id && (
-            <>
-              <Button
-                rounded
-                size="medium"
-                onClick={() => dispatch(logoutUser())}
-              >
-                Log Out
-              </Button>
+            <div className="profile-action-buttons">
               <Button
                 rounded
                 size="medium"
@@ -131,7 +124,17 @@ export const UserProfile = () => {
               >
                 Edit Profile
               </Button>
-            </>
+
+              <div className="button-outline">
+                <Button
+                  rounded
+                  size="medium"
+                  onClick={() => dispatch(logoutUser())}
+                >
+                  Log Out
+                </Button>
+              </div>
+            </div>
           )}
           {loggedInUser && user && loggedInUser._id !== user._id ? (
             loggedInUser.following.includes(user._id) ? (

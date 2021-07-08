@@ -18,6 +18,7 @@ export const Notifications = () => {
 
   return (
     <div className="container-main-content">
+      <div className="page-heading">Notifications</div>
       {notifications && notifications.length > 0 ? (
         <div className="container-notifications">
           {notifications.map(item => <NotificationCard notification={item} key={item._id}/>)}

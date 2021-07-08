@@ -2,13 +2,14 @@ import "./header.css";
 import { useSelector } from "react-redux";
 import { Avatar } from "shoto-ui";
 import { Link } from "react-router-dom";
+import { Logo } from "../../Logo/Logo";
 
 export const Header = () => {
   const { userData: user } = useSelector((state) => state.auth);
 
   return (
     <header className="header">
-      <div>gg</div>
+      <Logo/>
       <div className="avatar-custom">
         {user && (
           <Link to={`/${user.username}`} state={{ user }}>

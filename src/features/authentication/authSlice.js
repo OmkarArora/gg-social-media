@@ -142,7 +142,7 @@ export const authSlice = createSlice({
     },
     setUpdatePostStatus: (state, action) => {
       state.shouldUpdatePost = action.payload.updateStatus;
-    }
+    },
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
@@ -192,10 +192,12 @@ export const authSlice = createSlice({
     },
     [updateUserDetails.fulfilled]: (state, action) => {
       state.userData = action.payload.user;
-      if (localStorage) {
-        let login = JSON.parse(localStorage.getItem("ggLogin"));
-        login.userData = action.payload.user;
-        localStorage.setItem("ggLogin", JSON.stringify(login));
+      let login = JSON.parse(localStorage.getItem("ggLogin"));
+      if (login) {
+        localStorage?.setItem(
+          "ggLogin",
+          JSON.stringify({ userData: action.payload.user, token: login.token })
+        );
       }
       state.status = "fulfilled";
     },
@@ -257,6 +259,10 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setLoginDetails, logoutUser, setUserDetails, setUpdatePostStatus } =
-  authSlice.actions;
+export const {
+  setLoginDetails,
+  logoutUser,
+  setUserDetails,
+  setUpdatePostStatus,
+} = authSlice.actions;
 export default authSlice.reducer;

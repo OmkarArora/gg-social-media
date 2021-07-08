@@ -18,7 +18,7 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
   const dispatch = useDispatch();
 
   const getHeartIcon = () => {
-    if (post.likes && post.likes.length > 0) {
+    if (userData && post.likes && post.likes.length > 0) {
       if (post.likes.includes(userData._id)) {
         return (
           <span
@@ -63,7 +63,7 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
       dispatch(refreshFromUsername(userData.username));
       dispatch(setUpdatePostStatus({ updateStatus: false }));
     }
-  }, [userData.username, shouldUpdatePost, dispatch]);
+  }, [userData, shouldUpdatePost, dispatch]);
 
   useEffect(() => {
     if (shouldUpdateFeedPost) {

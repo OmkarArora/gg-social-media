@@ -6,6 +6,7 @@ import { Button, Input } from "shoto-ui";
 import { Link } from "react-router-dom";
 import { showAlert } from "../alert/alertSlice";
 import { LoadingModal } from "../loader/LoadingModal/LoadingModal";
+import { Logo } from "../../Logo/Logo";
 import "./auth.css";
 
 export const Signup = () => {
@@ -72,7 +73,9 @@ export const Signup = () => {
 
   return (
     <div className="container-auth">
-      <header>Sign Up for gg</header>
+      <header>
+        Sign Up for <Logo />
+      </header>
       <small>
         Already a member? <Link to="/login">Log In</Link>
       </small>
