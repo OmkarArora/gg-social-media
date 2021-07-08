@@ -36,13 +36,17 @@ export const UserProfile = () => {
   useEffect(() => {
     if (!state) {
       dispatch(fetchUserFromUsername(username));
-    } else if (user && loggedInUser && user._id === loggedInUser._id) {
-      dispatch(setUser({ user: loggedInUser }));
     } else {
       if (state.user) dispatch(setUser({ user: state.user }));
       else dispatch(fetchUserFromUsername(username));
     }
-  }, [dispatch, state, username, user, loggedInUser]);
+  }, [dispatch, state, username]);
+
+  useEffect(() => {
+    if (user && loggedInUser && user._id === loggedInUser._id) {
+      dispatch(setUser({ user: loggedInUser }));
+    }
+  }, [user, loggedInUser, dispatch]);
 
   useEffect(() => {
     if (user && feed.length > 0) {
