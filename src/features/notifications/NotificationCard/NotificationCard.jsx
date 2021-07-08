@@ -1,19 +1,13 @@
 import { FaUser } from "react-icons/fa";
 import { RiNotification3Fill } from "react-icons/ri";
 import { Avatar } from "shoto-ui";
+import { getProfileImage } from "../../../helper";
 import "./notificationCard.css";
 
 export const NotificationCard = ({ notification }) => {
   const user = notification.user;
   const notificationType = notification.notificationType;
 
-  const getProfileImage = () => {
-    if (user) {
-      if (user.profileImage) return user.profileImage;
-      return "./broken";
-    }
-    return "./broken";
-  };
   return (
     <div className="notification-card">
       <div className="notification-icon">
@@ -25,7 +19,7 @@ export const NotificationCard = ({ notification }) => {
         {user && (
           <Avatar
             alt={user?.name}
-            src={getProfileImage()}
+            src={getProfileImage(user)}
             height="2rem"
             width="2rem"
             key={user && user._id}

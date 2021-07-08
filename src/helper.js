@@ -94,3 +94,11 @@ export async function copyTextToClipboard(text) {
     return "error";
   }
 }
+
+export const getProfileImage = (user) => {
+  if (user) {
+    if (user.profileImage) return user.profileImage;
+    return "./broken";
+  }
+  return "./broken";
+};

@@ -16,12 +16,12 @@ import {
   logoutUser,
   unfollowUser,
   followUser,
-  // setUserDetails,
 } from "../authentication/authSlice";
 import { PostCard } from "../posts/PostCard/PostCard";
 import { UserEditModal } from "./UserEditModal/UserEditModal";
-import "./userProfile.css";
 import { LoadingModal } from "../loader/LoadingModal/LoadingModal";
+import { getProfileImage } from "../../helper";
+import "./userProfile.css";
 
 export const UserProfile = () => {
   const { username } = useParams();
@@ -65,14 +65,6 @@ export const UserProfile = () => {
     }
   }, [feed, user, dispatch]);
 
-  const getProfileImage = () => {
-    if (user) {
-      if (user.profileImage) return user.profileImage;
-      return "./broken";
-    }
-    return "./broken";
-  };
-
   const monthNames = [
     "Jan",
     "Feb",
@@ -109,7 +101,7 @@ export const UserProfile = () => {
           <div className="container-avatar">
             <Avatar
               alt={user?.name}
-              src={getProfileImage()}
+              src={getProfileImage(user)}
               height="5rem"
               width="5rem"
               key={user && user._id}
