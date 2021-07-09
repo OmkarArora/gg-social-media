@@ -1,17 +1,15 @@
+import { useEffect } from "react";
 import { Button } from "shoto-ui";
 import { RiQuillPenFill } from "react-icons/ri";
-import { useEffect, useState } from "react";
-import { NewPostModal } from "../NewPostModal/NewPostModal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, likePost, unlikePost } from "../postsSlice";
 import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
-import "./feed.css";
 import { setupAuthHeaderForServiceCalls } from "../../../helper";
 import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
+import "./feed.css";
 
-export const Feed = () => {
-  const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
+export const Feed = ({ setNewPostModalVisibility }) => {
   const { status, error, posts } = useSelector((state) => state.posts);
   const { token } = useSelector((state) => state.auth);
 
@@ -35,20 +33,24 @@ export const Feed = () => {
       {status === "error" && error && (
         <div style={{ color: "red" }}>{error}</div>
       )}
-      {status === "loading" && <LoadingModal/>}
+      {status === "loading" && <LoadingModal />}
       <div className="page-heading">Feed</div>
       <div className="posts-list">
         {posts.length > 0 &&
-          posts.map((post) => <PostCard post={post} key={post._id} likePost={likePost} unlikePost={unlikePost}/>)}
+          posts.map((post) => (
+            <PostCard
+              post={post}
+              key={post._id}
+              likePost={likePost}
+              unlikePost={unlikePost}
+            />
+          ))}
       </div>
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
           <RiQuillPenFill />
         </Button>
       </div>
-      {isNewPostModalVisible && (
-        <NewPostModal onClose={() => setNewPostModalVisibility(false)} />
-      )}
     </div>
   );
 };

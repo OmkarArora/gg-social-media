@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Routes, Route } from "react-router";
-import "./App.css";
 import { Login } from "./features/authentication/Login";
 import { Signup } from "./features/authentication/Signup";
 import { Counter } from "./features/counter/Counter";
@@ -22,11 +21,15 @@ import { UserProfile } from "./features/user/UserProfile";
 import { setupAuthHeaderForServiceCalls } from "./helper";
 import { PostPage } from "./features/posts/PostPage/PostPage";
 import { fetchUserFromUsername } from "./features/user/userSlice";
+import { NewPostModal } from "./features/posts/NewPostModal/NewPostModal";
+import "./App.css";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
 
   // useEffect(() => {
   //   if (!isUserLoggedIn) {
@@ -69,13 +72,25 @@ function App() {
         <Header />
       </div>
       <div className="container-sidenav">
-        <Sidenav />
+        <Sidenav setNewPostModalVisibility={setNewPostModalVisibility} />
       </div>
       <main className="main">
         <Routes>
-          <PrivateRoute path="/" element={<Feed />} />
+          <PrivateRoute
+            path="/"
+            element={
+              <Feed setNewPostModalVisibility={setNewPostModalVisibility} />
+            }
+          />
           <PrivateRoute path="/search" element={<Search />} />
-          <PrivateRoute path="/notifications" element={<Notifications />} />
+          <PrivateRoute
+            path="/notifications"
+            element={
+              <Notifications
+                setNewPostModalVisibility={setNewPostModalVisibility}
+              />
+            }
+          />
           <PrivateRoute path="/counter" element={<Counter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -83,6 +98,9 @@ function App() {
           <Route path="/:username" element={<UserProfile />} />
         </Routes>
         <Alert />
+        {isNewPostModalVisible && (
+          <NewPostModal onClose={() => setNewPostModalVisibility(false)} />
+        )}
       </main>
       <div className="container-footer">
         <Navbar />

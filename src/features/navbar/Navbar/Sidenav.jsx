@@ -1,14 +1,11 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Logo } from "../../../Logo/Logo";
 import { Navbar } from "./Navbar";
 import { Avatar, Button } from "shoto-ui";
 import { Link } from "react-router-dom";
-import { NewPostModal } from "../../posts/NewPostModal/NewPostModal";
 import { getProfileImage } from "../../../helper";
 
-export const Sidenav = () => {
-  const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
+export const Sidenav = ({setNewPostModalVisibility}) => {
 
   const { userData: user } = useSelector((state) => state.auth);
 
@@ -41,10 +38,6 @@ export const Sidenav = () => {
             <div>{user?.name}</div>
           </div>
         </Link>
-      )}
-
-      {isNewPostModalVisible && (
-        <NewPostModal onClose={() => setNewPostModalVisibility(false)} />
       )}
     </div>
   );

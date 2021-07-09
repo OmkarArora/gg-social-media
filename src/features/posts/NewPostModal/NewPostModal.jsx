@@ -132,7 +132,7 @@ export const NewPostModal = ({ onClose }) => {
           </div>
         )}
 
-        <div className="footer">
+        <div className="footer-newPost">
           <span>
             <ImageUploader
               previewImage={previewImage}

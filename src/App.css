@@ -46,7 +46,6 @@
 
   .main {
     margin-left: var(--width-sidenav);
-    z-index: -1;
   }
 
   .container-footer {
@@ -57,7 +56,6 @@
     display: block;
     position: fixed;
     left: 0;
-    z-index: -1;
   }
 
   .container-main-content {

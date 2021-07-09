@@ -30,7 +30,7 @@ body {
   --primary-border: 1px solid var(--grey-color);
 
   /* z index */
-  --z-modal: 2;
+  --z-modal: 3;
 
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
