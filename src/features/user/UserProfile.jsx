@@ -37,10 +37,13 @@ export const UserProfile = () => {
     if (!state) {
       dispatch(fetchUserFromUsername(username));
     } else {
-      if (state.user) dispatch(setUser({ user: state.user }));
-      else dispatch(fetchUserFromUsername(username));
+      if (loggedInUser && state.user && loggedInUser._id === state.user._id) {
+        dispatch(setUser({ user: loggedInUser }));
+      } else {
+        dispatch(setUser({ user: state.user }));
+      }
     }
-  }, [dispatch, state, username]);
+  }, [dispatch, state, username, loggedInUser]);
 
   // useEffect(() => {
   //   if (user && loggedInUser && user._id === loggedInUser._id) {
