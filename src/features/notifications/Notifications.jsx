@@ -24,7 +24,7 @@ export const Notifications = ({ setNewPostModalVisibility }) => {
           ))}
         </div>
       ) : (
-        <div className="search-placeholder">Nothing to see here</div>
+        <div className="placeholder-text">Nothing to see here</div>
       )}
 
       <div className="container-fab">

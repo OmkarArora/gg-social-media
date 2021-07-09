@@ -60,7 +60,7 @@ export const Search = () => {
         </div>
       )}
       {searchResults.length === 0 && (
-        <div className="search-placeholder">You can find people here</div>
+        <div className="placeholder-text">You can find people here</div>
       )}
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>

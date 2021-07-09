@@ -36,7 +36,7 @@ export const Feed = ({ setNewPostModalVisibility }) => {
       {status === "loading" && <LoadingModal />}
       <div className="page-heading">Feed</div>
       <div className="posts-list">
-        {posts.length > 0 &&
+        {posts.length > 0 ? (
           posts.map((post) => (
             <PostCard
               post={post}
@@ -44,7 +44,12 @@ export const Feed = ({ setNewPostModalVisibility }) => {
               likePost={likePost}
               unlikePost={unlikePost}
             />
-          ))}
+          ))
+        ) : (
+          <div className="placeholder-text">
+            Follow people to see their posts
+          </div>
+        )}
       </div>
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
