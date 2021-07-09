@@ -87,20 +87,20 @@ export const postsSlice = createSlice({
     error: null,
     posts: [],
     detailsPagePost: null,
-    shouldUpdateFeedPost: false
+    shouldUpdateFeedPost: false,
   },
   reducers: {
     setDetailsPagePost: (state, action) => {
       state.detailsPagePost = action.payload.detailsPagePost;
     },
-    editFeedPost: (state, action) => {
-      state.posts = state.posts.map((item) =>
-        item._id === action.payload.post._id ? action.payload.post : item
-      );
-    },
     setUpdateFeedPostStatus: (state, action) => {
       state.shouldUpdateFeedPost = action.payload.updateStatus;
-    }
+    },
+    setDefaultPostsStatus: (state) => {
+      state.posts = [];
+      state.status = "idle";
+      state.error = null;
+    },
   },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
@@ -177,5 +177,6 @@ export const postsSlice = createSlice({
   },
 });
 
-export const { setDetailsPagePost, editFeedPost, setUpdateFeedPostStatus } = postsSlice.actions;
+export const { setDetailsPagePost, setUpdateFeedPostStatus, setDefaultPostsStatus } =
+  postsSlice.actions;
 export default postsSlice.reducer;

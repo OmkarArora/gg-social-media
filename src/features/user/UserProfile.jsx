@@ -21,6 +21,7 @@ import { PostCard } from "../posts/PostCard/PostCard";
 import { UserEditModal } from "./UserEditModal/UserEditModal";
 import { LoadingModal } from "../loader/LoadingModal/LoadingModal";
 import { getProfileImage } from "../../helper";
+import { setDefaultPostsStatus } from "../posts/postsSlice";
 import "./userProfile.css";
 
 export const UserProfile = () => {
@@ -44,13 +45,6 @@ export const UserProfile = () => {
       }
     }
   }, [dispatch, state, username, loggedInUser]);
-
-  // useEffect(() => {
-  //   if (user && loggedInUser && user._id === loggedInUser._id) {
-  //     console.log("change")
-  //     dispatch(setUser({ user: loggedInUser }));
-  //   }
-  // }, [user, loggedInUser, dispatch]);
 
   useEffect(() => {
     if (user && feed.length > 0) {
@@ -125,7 +119,10 @@ export const UserProfile = () => {
                 <Button
                   rounded
                   size="medium"
-                  onClick={() => dispatch(logoutUser())}
+                  onClick={() => {
+                    dispatch(setDefaultPostsStatus());
+                    dispatch(logoutUser());
+                  }}
                 >
                   Log Out
                 </Button>
