@@ -42,11 +42,12 @@ export const UserProfile = () => {
     }
   }, [dispatch, state, username]);
 
-  useEffect(() => {
-    if (user && loggedInUser && user._id === loggedInUser._id) {
-      dispatch(setUser({ user: loggedInUser }));
-    }
-  }, [user, loggedInUser, dispatch]);
+  // useEffect(() => {
+  //   if (user && loggedInUser && user._id === loggedInUser._id) {
+  //     console.log("change")
+  //     dispatch(setUser({ user: loggedInUser }));
+  //   }
+  // }, [user, loggedInUser, dispatch]);
 
   useEffect(() => {
     if (user && feed.length > 0) {
