@@ -34,7 +34,12 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
               }
             }}
           >
-            <AiFillHeart />{post.likes.length===0?"": <span className="like-count">{` ${post.likes.length}`}</span>}
+            <AiFillHeart />
+            {post.likes.length === 0 ? (
+              ""
+            ) : (
+              <span className="like-count">{` ${post.likes.length}`}</span>
+            )}
           </span>
         );
       }
@@ -53,7 +58,12 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
           }
         }}
       >
-        <AiOutlineHeart />{post.likes.length===0?"": <span className="like-count">{` ${post.likes.length}`}</span>}
+        <AiOutlineHeart />
+        {post.likes && post.likes.length === 0 ? (
+          ""
+        ) : (
+          <span className="like-count">{` ${post.likes && post.likes.length}`}</span>
+        )}
       </span>
     );
   };
@@ -90,21 +100,23 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
     <div className="postcard-wrapper">
       <div className="container-postcard">
         <div className="container-profilePic">
-          <Link to={`/${post.author.username}`}>
-            <Avatar
-              src={post.author.profileImage ? post.author.profileImage : ""}
-              alt={`${post.author.name}`}
-              height="3rem"
-              width="3rem"
-            />
-          </Link>
+          {post && post.author && (
+            <Link to={`/${post.author.username}`}>
+              <Avatar
+                src={post.author.profileImage ? post.author.profileImage : ""}
+                alt={`${post.author.name}`}
+                height="3rem"
+                width="3rem"
+              />
+            </Link>
+          )}
         </div>
         <Link to={`/post/${post._id}`} state={{ post }}>
           <div className="container-post-content">
             <div className="author-details">
-              <div>{post.author.name}</div>
+              <div>{post.author && post.author.name}</div>
               <div className="text-grey">
-                @{post.author.username} <span className="separator-dot">.</span>{" "}
+                @{post.author && post.author.username} <span className="separator-dot">.</span>{" "}
                 {getRelativeTime(
                   new Date().getTime(),
                   new Date(post.createdAt).getTime()
@@ -112,8 +124,8 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
               </div>
             </div>
             <div className="post-content">
-              {post.content.text}
-              {post.content.media.length > 0 && post.content.media[0] !== "" && (
+              {post.content && post.content.text}
+              {post.content && post.content.media && post.content.media.length > 0 && post.content.media[0] !== "" && (
                 <div className="container-postImage">
                   <img src={post.content.media[0]} alt="post" />
                 </div>
