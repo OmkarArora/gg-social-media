@@ -5,26 +5,27 @@ import { Avatar, Button } from "shoto-ui";
 import { Link } from "react-router-dom";
 import { getProfileImage } from "../../../helper";
 
-export const Sidenav = ({setNewPostModalVisibility}) => {
-
-  const { userData: user } = useSelector((state) => state.auth);
+export const Sidenav = ({ setNewPostModalVisibility }) => {
+  const { userData: user, isUserLoggedIn } = useSelector((state) => state.auth);
 
   return (
     <div className="sidenav">
       <div>
         <Logo />
         <Navbar />
-        <div className="container-post-button">
-          <Button
-            rounded
-            size="large"
-            onClick={() => setNewPostModalVisibility(true)}
-          >
-            New Post
-          </Button>
-        </div>
+        {isUserLoggedIn && (
+          <div className="container-post-button">
+            <Button
+              rounded
+              size="large"
+              onClick={() => setNewPostModalVisibility(true)}
+            >
+              New Post
+            </Button>
+          </div>
+        )}
       </div>
-      
+
       {user && (
         <Link to={`/${user.username}`} state={{ user }}>
           <div className="container-profile-button">
