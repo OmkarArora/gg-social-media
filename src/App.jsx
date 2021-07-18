@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Routes, Route } from "react-router";
 import { Login } from "./features/authentication/Login";
 import { Signup } from "./features/authentication/Signup";
-import { Counter } from "./features/counter/Counter";
 import { Navbar } from "./features/navbar/Navbar/Navbar";
 import { Sidenav } from "./features/navbar/Navbar/Sidenav";
 import { Feed } from "./features/posts/Feed/Feed";
@@ -91,7 +90,6 @@ function App() {
               />
             }
           />
-          <PrivateRoute path="/counter" element={<Counter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/post/:postId" element={<PostPage />} />
