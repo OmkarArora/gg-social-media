@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Routes, Route } from "react-router";
-import { Login } from "./features/authentication/Login";
-import { Signup } from "./features/authentication/Signup";
-import { Navbar } from "./features/navbar/Navbar/Navbar";
-import { Sidenav } from "./features/navbar/Navbar/Sidenav";
-import { Feed } from "./features/posts/Feed/Feed";
-import { Alert } from "./features/alert/Alert";
 import {
+  Login,
+  Signup,
+  Navbar,
+  Sidenav,
+  Feed,
+  Alert,
+  Search,
+  Notifications,
+  Header,
+  UserProfile,
+  PostPage,
+  NewPostModal,
   setLoginDetails,
   logoutUser,
-} from "./features/authentication/authSlice";
+  fetchUserFromUsername,
+} from "./features";
 import axios from "axios";
-import { Search } from "./features/search/Search";
-import { Notifications } from "./features/notifications/Notifications";
-import { Header } from "./features/header/Header";
 import PrivateRoute from "./PrivateRoute";
-import { UserProfile } from "./features/user/UserProfile";
 import { setupAuthHeaderForServiceCalls } from "./helper";
-import { PostPage } from "./features/posts/PostPage/PostPage";
-import { fetchUserFromUsername } from "./features/user/userSlice";
-import { NewPostModal } from "./features/posts/NewPostModal/NewPostModal";
 import "./App.css";
 
 function App() {
