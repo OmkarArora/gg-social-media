@@ -29,6 +29,17 @@
   font-size: 1.3rem;
 }
 
+.container-banner {
+  position: relative;
+}
+
+.container-bannerImageUploader {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: var(--z-imageUploaderIcon);
+}
+
 .editModal-header .icon-close {
   font-size: 2rem;
   position: relative;
