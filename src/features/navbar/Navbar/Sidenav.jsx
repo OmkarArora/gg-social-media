@@ -11,7 +11,10 @@ export const Sidenav = ({ setNewPostModalVisibility }) => {
   return (
     <div className="sidenav">
       <div>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
+
         <Navbar />
         {isUserLoggedIn && (
           <div className="container-post-button">
