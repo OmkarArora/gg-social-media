@@ -237,7 +237,7 @@ export const UserProfile = () => {
         <UserEditModal
           setEditProfileModal={setEditProfileModal}
           user={user}
-          profileImage={getProfileImage()}
+          profileImage={getProfileImage(user)}
         />
       )}
     </div>
