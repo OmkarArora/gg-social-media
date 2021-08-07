@@ -15,13 +15,13 @@ import {
   PostPage,
   NewPostModal,
   setLoginDetails,
-  logoutUser,
-  fetchUserFromUsername,
+  logoutUser
 } from "./features";
 import axios from "axios";
 import PrivateRoute from "./PrivateRoute";
 import { setupAuthHeaderForServiceCalls } from "./helper";
 import "./App.css";
+import { refreshFromUsername } from "./features/authentication/authSlice";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
@@ -30,19 +30,11 @@ function App() {
 
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
 
-  // useEffect(() => {
-  //   if (!isUserLoggedIn) {
-  //     navigate("/login");
-  //   }
-  // }, [isUserLoggedIn, navigate]);
-
   useEffect(() => {
     let login = JSON.parse(localStorage.getItem("ggLogin"));
     if (login) {
-      dispatch(
-        setLoginDetails({ token: login.token, userData: login.userData })
-      );
-      dispatch(fetchUserFromUsername(login.userData.username));
+      dispatch(setLoginDetails({ token: login.token }));
+      dispatch(refreshFromUsername(login.username));
     }
   }, [dispatch]);
 
@@ -51,7 +43,7 @@ function App() {
   }, [token]);
 
   useEffect(() => {
-    // setupAuthExceptionHandler
+    // Setup Auth Exception Handler
     const UNAUTHORIZED = 401;
     axios.interceptors.response.use(
       (response) => response,
