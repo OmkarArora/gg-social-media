@@ -108,7 +108,6 @@ export const unfollowUser = createAsyncThunk(
 
 let login = JSON.parse(localStorage.getItem("ggLogin"));
 let local_token = login?.token || null;
-let local_userData = login?.userData || null;
 let userLoginStatus = local_token ? true : false;
 
 export const authSlice = createSlice({
@@ -118,12 +117,11 @@ export const authSlice = createSlice({
     error: null,
     isUserLoggedIn: userLoginStatus,
     token: local_token,
-    userData: local_userData,
+    userData: null,
     shouldUpdatePost: false,
   },
   reducers: {
     setLoginDetails: (state, action) => {
-      state.userData = action.payload.userData;
       state.token = action.payload.token;
       state.isUserLoggedIn = true;
     },
@@ -149,7 +147,8 @@ export const authSlice = createSlice({
       state.status = "loading";
     },
     [loginUser.fulfilled]: (state, action) => {
-      state.userData = action.payload.user;
+      const user = action.payload.user;
+      state.userData = user;
       state.token = action.payload.token;
       state.isUserLoggedIn = true;
       state.error = null;
@@ -157,7 +156,11 @@ export const authSlice = createSlice({
 
       localStorage?.setItem(
         "ggLogin",
-        JSON.stringify({ userData: state.userData, token: state.token })
+        JSON.stringify({
+          username: user.username,
+          userId: user._id,
+          token: action.payload.token,
+        })
       );
     },
     [loginUser.rejected]: (state, action) => {
@@ -170,7 +173,8 @@ export const authSlice = createSlice({
       state.status = "loading";
     },
     [signupUser.fulfilled]: (state, action) => {
-      state.userData = action.payload.user;
+      const user = action.payload.user;
+      state.userData = user;
       state.token = action.payload.token;
       state.isUserLoggedIn = true;
       state.error = null;
@@ -178,7 +182,11 @@ export const authSlice = createSlice({
 
       localStorage?.setItem(
         "ggLogin",
-        JSON.stringify({ userData: state.userData, token: state.token })
+        JSON.stringify({
+          username: user.username,
+          userId: user._id,
+          token: action.payload.token,
+        })
       );
     },
     [signupUser.rejected]: (state, action) => {
