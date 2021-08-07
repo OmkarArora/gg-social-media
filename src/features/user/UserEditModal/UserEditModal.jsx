@@ -23,16 +23,18 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
   const [localAppState, setLocalAppState] = useState("success");
 
   // Image uploader
-  const [previewImage, setPreviewImage] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadedURL, setUploadedURL] = useState("");
+  const [previewBannerImage, setPreviewBannerImage] = useState(null);
+  const [selectedBannerFile, setSelectedBannerFile] = useState(null);
   const [croppedBanner, setCroppedBanner] = useState(null);
   const [bannerBlob, setBannerBlob] = useState(null);
 
+  const [previewProfileImage, setPreviewProfileImage] = useState(null);
+  const [selectedProfileFile, setSelectedProfileFile] = useState(null);
+
   useEffect(() => {
-    if (previewImage !== null) {
+    if (previewBannerImage !== null) {
       (async () => {
-        const croppedCanvas = await crop(previewImage, 1500 / 500);
+        const croppedCanvas = await crop(previewBannerImage, 1500 / 500);
         const croppedImage = croppedCanvas.toDataURL();
         setCroppedBanner(croppedImage);
         croppedCanvas.toBlob((blob) => {
@@ -40,9 +42,9 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
         }, "image/png");
       })();
     }
-  }, [previewImage]);
+  }, [previewBannerImage]);
 
-  const uploadImage = async (imageFile) => {
+  const uploadImage = async (imageFile, setPreviewImage, setSelectedFile) => {
     let axiosInstance = axios.create();
     delete axiosInstance.defaults.headers.common["Authorization"];
 
@@ -58,7 +60,6 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
         `${process.env.REACT_APP_IMAGE_UPLOAD_API}`,
         formData
       );
-      setUploadedURL(response.data.secure_url);
       setPreviewImage(null);
       setSelectedFile(null);
       return response.data.secure_url;
@@ -87,13 +88,35 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
 
   const saveUserDetails = async () => {
     setLocalAppState("loading");
-    let imageURL = "";
+    let bannerURL = "";
+    let profileURL = "";
     try {
       if (bannerBlob) {
-        imageURL = await uploadImage(bannerBlob);
+        bannerURL = await uploadImage(
+          bannerBlob,
+          setPreviewBannerImage,
+          setSelectedBannerFile
+        );
       }
     } catch (error) {
-      dispatch(showAlert({ type: "error", data: "Couldn't upload image" }));
+      dispatch(
+        showAlert({ type: "error", data: "Couldn't upload banner image" })
+      );
+      return;
+    }
+
+    try {
+      if (selectedProfileFile) {
+        profileURL = await uploadImage(
+          selectedProfileFile,
+          setPreviewProfileImage,
+          setSelectedProfileFile
+        );
+      }
+    } catch (error) {
+      dispatch(
+        showAlert({ type: "error", data: "Couldn't upload profile image" })
+      );
       return;
     }
 
@@ -105,8 +128,11 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
     if (birthDate) {
       updates.birthDate = new Date(birthDate).toISOString();
     }
-    if (croppedBanner) {
-      updates.bannerImage = imageURL;
+    if (bannerURL) {
+      updates.bannerImage = bannerURL;
+    }
+    if (profileURL) {
+      updates.profileImage = profileURL;
     }
     dispatch(updateUserDetails({ userUpdates: updates, userId: user._id }));
     setLocalAppState("success");
@@ -168,24 +194,45 @@ export const UserEditModal = ({ setEditProfileModal, user, profileImage }) => {
             )}
             <span className="container-bannerImageUploader">
               <ImageUploader
-                previewImage={previewImage}
-                setPreviewImage={setPreviewImage}
-                selectedFile={selectedFile}
-                setSelectedFile={setSelectedFile}
-                uploadedURL={uploadedURL}
-                setUploadedURL={setUploadedURL}
+                setPreviewImage={setPreviewBannerImage}
+                setSelectedFile={setSelectedBannerFile}
+                selectedFile={selectedBannerFile}
               />
             </span>
           </div>
           <div className="container-userInfo">
             <div className="container-avatar">
-              <Avatar
+              {previewProfileImage ? (
+                <Avatar
+                  alt={user.name}
+                  src={previewProfileImage}
+                  height="5rem"
+                  width="5rem"
+                  key={user._id}
+                />
+              ) : (
+                <Avatar
+                  alt={user.name}
+                  src={profileImage}
+                  height="5rem"
+                  width="5rem"
+                  key={user._id}
+                />
+              )}
+              {/* <Avatar
                 alt={user.name}
                 src={profileImage}
                 height="5rem"
                 width="5rem"
                 key={user._id}
-              />
+              /> */}
+              <span className="container-profileImageUploader">
+                <ImageUploader
+                  setPreviewImage={setPreviewProfileImage}
+                  selectedFile={selectedProfileFile}
+                  setSelectedFile={setSelectedProfileFile}
+                />
+              </span>
             </div>
             <div className="container-editInputs">
               <ControlledInput
