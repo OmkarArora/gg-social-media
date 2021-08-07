@@ -199,12 +199,17 @@ export const authSlice = createSlice({
       state.status = "loading";
     },
     [updateUserDetails.fulfilled]: (state, action) => {
-      state.userData = action.payload.user;
+      const user = action.payload.user;
+      state.userData = user;
       let login = JSON.parse(localStorage.getItem("ggLogin"));
       if (login) {
         localStorage?.setItem(
           "ggLogin",
-          JSON.stringify({ userData: action.payload.user, token: login.token })
+          JSON.stringify({
+            username: user.username,
+            userId: user._id,
+            token: login.token,
+          })
         );
       }
       state.status = "fulfilled";
@@ -219,11 +224,18 @@ export const authSlice = createSlice({
       state.status = "loading";
     },
     [followUser.fulfilled]: (state, action) => {
-      state.userData = action.payload.user;
+      const user = action.payload.user;
+      state.userData = user;
       if (localStorage) {
         let login = JSON.parse(localStorage.getItem("ggLogin"));
-        login.userData = action.payload.user;
-        localStorage.setItem("ggLogin", JSON.stringify(login));
+        localStorage.setItem(
+          "ggLogin",
+          JSON.stringify({
+            username: user.username,
+            userId: user._id,
+            token: login.token,
+          })
+        );
       }
       state.status = "fulfilled";
     },
@@ -237,11 +249,18 @@ export const authSlice = createSlice({
       state.status = "loading";
     },
     [unfollowUser.fulfilled]: (state, action) => {
-      state.userData = action.payload.user;
+      const user = action.payload.user;
+      state.userData = user;
       if (localStorage) {
         let login = JSON.parse(localStorage.getItem("ggLogin"));
-        login.userData = action.payload.user;
-        localStorage.setItem("ggLogin", JSON.stringify(login));
+        localStorage.setItem(
+          "ggLogin",
+          JSON.stringify({
+            username: user.username,
+            userId: user._id,
+            token: login.token,
+          })
+        );
       }
       state.status = "fulfilled";
     },

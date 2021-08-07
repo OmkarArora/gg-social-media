@@ -29,6 +29,35 @@
   font-size: 1.3rem;
 }
 
+.container-banner {
+  position: relative;
+}
+
+.container-bannerImageUploader {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: var(--z-imageUploaderIcon);
+}
+
+.container-avatar {
+  position: relative;
+}
+
+.container-profileImageUploader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 10rem;
+  z-index: var(--z-imageUploaderIcon);
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .editModal-header .icon-close {
   font-size: 2rem;
   position: relative;
