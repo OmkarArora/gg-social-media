@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import { Avatar } from "shoto-ui";
 import { copyTextToClipboard, getRelativeTime } from "../../../helper";
 import { Link } from "react-router-dom";
-import { AiFillHeart, AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlineLink } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
   refreshFromUsername,
   setUpdatePostStatus,
 } from "../../authentication/authSlice";
 import { fetchPosts, setUpdateFeedPostStatus } from "../../posts/postsSlice";
-import "./postcard.css";
 import { showAlert } from "../../alert/alertSlice";
+import "./postcard.css";
 
 export const PostCard = ({ post, likePost, unlikePost }) => {
   const { userData, shouldUpdatePost } = useSelector((state) => state.auth);
@@ -137,7 +137,7 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
       <div className="container-post-actions text-grey">
         {getHeartIcon()}
         <span className="icon" onClick={copyPostLink}>
-          <AiOutlineShareAlt />
+          <AiOutlineLink />
         </span>
       </div>
     </div>
