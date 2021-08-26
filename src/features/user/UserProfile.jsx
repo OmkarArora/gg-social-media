@@ -29,9 +29,9 @@ export const UserProfile = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
 
-  const { user, status } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const { posts: feed } = useSelector((state) => state.posts);
-  const { userData: loggedInUser } = useSelector((state) => state.auth);
+  const { userData: loggedInUser, status } = useSelector((state) => state.auth);
   const [editProfileModalOpen, setEditProfileModal] = useState(false);
 
   useEffect(() => {

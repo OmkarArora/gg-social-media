@@ -239,6 +239,12 @@ export const authSlice = createSlice({
       }
       state.status = "fulfilled";
     },
+    [followUser.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
     [unfollowUser.rejected]: (state, action) => {
       state.status = "error";
       if (action.payload && action.payload.errorMessage)
@@ -263,12 +269,6 @@ export const authSlice = createSlice({
         );
       }
       state.status = "fulfilled";
-    },
-    [followUser.rejected]: (state, action) => {
-      state.status = "error";
-      if (action.payload && action.payload.errorMessage)
-        state.error = action.payload.errorMessage;
-      else state.error = "Something went wrong";
     },
     [refreshFromUsername.pending]: (state) => {
       state.status = "loading";
