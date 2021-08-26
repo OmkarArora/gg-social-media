@@ -35,7 +35,12 @@
   gap: 1rem;
   width: 80%;
   padding: 1rem;
+  padding-bottom: 0.5rem;
   max-width: 400px;
+}
+
+.form-login.form-test-creds {
+  padding-top: 0.1rem;
 }
 
 .container-auth form .shoto-input-wrapper {

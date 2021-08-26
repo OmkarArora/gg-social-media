@@ -28,6 +28,11 @@ export const Login = () => {
     dispatch(loginUser({ email, password }));
   };
 
+  const onSubmitTestCreds = (e) => {
+    e.preventDefault();
+    dispatch(loginUser({ email: "user@gmail.com", password: "abcd@1234" }));
+  }
+
   useEffect(() => {
     if (isUserLoggedIn) {
       navigate("/");
@@ -71,6 +76,12 @@ export const Login = () => {
           Log In
         </Button>
       </form>
+      <form className="form-login form-test-creds" onSubmit={onSubmitTestCreds}>
+        <Button type="submit" rounded size="large" bgColor="#1A8CD8">
+          Log In with Test Credentials
+        </Button>
+      </form>
+
       {status === "loading" && <LoadingModal />}
     </div>
   );
