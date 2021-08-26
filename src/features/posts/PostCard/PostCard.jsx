@@ -13,7 +13,7 @@ import "./postcard.css";
 import { showAlert } from "../../alert/alertSlice";
 
 export const PostCard = ({ post, likePost, unlikePost }) => {
-  const { userData, shouldUpdatePost } = useSelector((state) => state.auth);
+  const { userData, shouldUpdatePost, isUserLoggedIn } = useSelector((state) => state.auth);
   const { shouldUpdateFeedPost } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
@@ -135,7 +135,7 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
         </Link>
       </div>
       <div className="container-post-actions text-grey">
-        {getHeartIcon()}
+        {isUserLoggedIn && getHeartIcon()}
         <span className="icon" onClick={copyPostLink}>
           <AiOutlineShareAlt />
         </span>
