@@ -83,7 +83,7 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
   }, [shouldUpdateFeedPost, dispatch]);
 
   const copyPostLink = async () => {
-    const postLink = window.location.href + `post/${post._id}`;
+    const postLink = window.location.origin + `/post/${post._id}`;
     let message = await copyTextToClipboard(postLink);
     dispatch(
       showAlert({
