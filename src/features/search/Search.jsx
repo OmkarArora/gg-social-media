@@ -14,7 +14,7 @@ export const Search = () => {
   const dispatch = useDispatch();
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const { searchResults } = useSelector((state) => state.search);
+  const { searchResults, status } = useSelector((state) => state.search);
 
   useEffect(() => {
     dispatch(setActiveNavTab({ activeTab: "search" }));
@@ -59,8 +59,19 @@ export const Search = () => {
           ))}
         </div>
       )}
-      {searchResults.length === 0 && (
-        <div className="placeholder-text">You can find people here</div>
+      {searchText === "" && searchResults.length === 0 ? (
+        <div className="placeholder-text">
+          You can find people here
+          <br />
+          <span className="text-grey">Try search query {`"user"`}</span>
+        </div>
+      ) : (
+        searchResults.length === 0 &&
+        status !== "loading" && (
+          <div className="placeholder-text">
+            No users found for {`"${searchText}"`}
+          </div>
+        )
       )}
       <div className="container-fab">
         <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>

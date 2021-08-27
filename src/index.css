@@ -41,9 +41,8 @@ body {
   height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.text-grey {
+  color: var(--grey-color);
 }
 
 .avatar-custom .shoto-avatar-fallback {
