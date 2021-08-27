@@ -97,7 +97,7 @@ export const NewPostModal = ({ onClose }) => {
             <div className="container-btn-post">
               <Button
                 rounded
-                disabled={availableCharacters < 0 ? true : false}
+                disabled={availableCharacters < 0 || (previewImage===null && postText==="")? true : false}
                 onClick={onClickPost}
               >
                 Post
