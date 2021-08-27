@@ -158,7 +158,7 @@ export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
             <AiOutlineLink />
           </span>
         )}
-        {isUserLoggedIn && post.author && post.author._id === userData._id && (
+        {isUserLoggedIn && userData && post && post.author && post.author._id === userData._id && (
           <span className="icon" onClick={onClickDeletePost}>
             <AiOutlineDelete />
           </span>
