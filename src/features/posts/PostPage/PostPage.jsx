@@ -4,13 +4,14 @@ import { setDetailsPagePost, fetchPostDetails } from "../postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "../PostCard/PostCard";
 import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
+import { likePost, unlikePost, deletePost } from "../../user/userSlice";
 
 export const PostPage = () => {
   const { postId } = useParams();
   const { state } = useLocation();
   const { detailsPagePost, status } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (!state) {
       dispatch(fetchPostDetails(postId));
@@ -23,8 +24,15 @@ export const PostPage = () => {
 
   return (
     <div className="container-postDetails-page">
-      {status==="loading" && <LoadingModal/>}
-      {detailsPagePost && <PostCard post={detailsPagePost} />}
+      {status === "loading" && <LoadingModal />}
+      {detailsPagePost && (
+        <PostCard
+          post={detailsPagePost}
+          likePost={likePost}
+          unlikePost={unlikePost}
+          deletePost={deletePost}
+        />
+      )}
     </div>
   );
 };
