@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Button } from "shoto-ui";
 import { RiQuillPenFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, likePost, unlikePost } from "../postsSlice";
+import { fetchPosts, likePost, unlikePost, deletePost } from "../postsSlice";
 import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
 import { setupAuthHeaderForServiceCalls } from "../../../helper";
@@ -43,6 +43,7 @@ export const Feed = ({ setNewPostModalVisibility }) => {
               key={post._id}
               likePost={likePost}
               unlikePost={unlikePost}
+              deletePost={deletePost}
             />
           ))
         ) : (

@@ -2,7 +2,12 @@ import { useEffect } from "react";
 import { Avatar } from "shoto-ui";
 import { copyTextToClipboard, getRelativeTime } from "../../../helper";
 import { Link } from "react-router-dom";
-import { AiFillHeart, AiOutlineHeart, AiOutlineLink } from "react-icons/ai";
+import {
+  AiFillHeart,
+  AiOutlineHeart,
+  AiOutlineLink,
+  AiOutlineDelete,
+} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
   refreshFromUsername,
@@ -12,8 +17,10 @@ import { fetchPosts, setUpdateFeedPostStatus } from "../../posts/postsSlice";
 import { showAlert } from "../../alert/alertSlice";
 import "./postcard.css";
 
-export const PostCard = ({ post, likePost, unlikePost }) => {
-  const { userData, shouldUpdatePost, isUserLoggedIn } = useSelector((state) => state.auth);
+export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
+  const { userData, shouldUpdatePost, isUserLoggedIn } = useSelector(
+    (state) => state.auth
+  );
   const { shouldUpdateFeedPost } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
@@ -62,7 +69,9 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
         {post.likes && post.likes.length === 0 ? (
           ""
         ) : (
-          <span className="like-count">{` ${post.likes && post.likes.length}`}</span>
+          <span className="like-count">{` ${
+            post.likes && post.likes.length
+          }`}</span>
         )}
       </span>
     );
@@ -96,6 +105,10 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
     );
   };
 
+  const onClickDeletePost = () => {
+    dispatch(deletePost(post._id));
+  };
+
   return (
     <div className="postcard-wrapper">
       <div className="container-postcard">
@@ -116,7 +129,8 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
             <div className="author-details">
               <div>{post.author && post.author.name}</div>
               <div className="text-grey">
-                @{post.author && post.author.username} <span className="separator-dot">.</span>{" "}
+                @{post.author && post.author.username}{" "}
+                <span className="separator-dot">.</span>{" "}
                 {getRelativeTime(
                   new Date().getTime(),
                   new Date(post.createdAt).getTime()
@@ -125,11 +139,14 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
             </div>
             <div className="post-content">
               {post.content && post.content.text}
-              {post.content && post.content.media && post.content.media.length > 0 && post.content.media[0] !== "" && (
-                <div className="container-postImage">
-                  <img src={post.content.media[0]} alt="post" />
-                </div>
-              )}
+              {post.content &&
+                post.content.media &&
+                post.content.media.length > 0 &&
+                post.content.media[0] !== "" && (
+                  <div className="container-postImage">
+                    <img src={post.content.media[0]} alt="post" />
+                  </div>
+                )}
             </div>
           </div>
         </Link>
@@ -139,6 +156,11 @@ export const PostCard = ({ post, likePost, unlikePost }) => {
         <span className="icon" onClick={copyPostLink}>
           <AiOutlineLink />
         </span>
+        {post && post.author && post.author._id === userData._id && (
+          <span className="icon" onClick={onClickDeletePost}>
+            <AiOutlineDelete />
+          </span>
+        )}
       </div>
     </div>
   );

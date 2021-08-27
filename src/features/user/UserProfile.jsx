@@ -5,6 +5,7 @@ import {
   fetchUserFromUsername,
   likePost,
   unlikePost,
+  deletePost
 } from "./userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./userSlice";
@@ -228,6 +229,7 @@ export const UserProfile = () => {
                   post={post}
                   likePost={likePost}
                   unlikePost={unlikePost}
+                  deletePost={deletePost}
                 />
               ))}
           </div>

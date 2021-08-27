@@ -80,6 +80,20 @@ export const unlikePost = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk(
+  "posts/deletPost",
+  async (postId, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND}/posts/${postId}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -174,9 +188,26 @@ export const postsSlice = createSlice({
         state.error = action.payload.errorMessage;
       else state.error = "Something went wrong";
     },
+    [deletePost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      const deletedPost = action.payload.post;
+      state.posts = state.posts.filter((post) => deletedPost._id !== post._id);
+      state.status = "fulfilled";
+    },
+    [deletePost.rejected]: (state, action) => {
+      state.status = "error";
+      if (action.payload && action.payload.errorMessage)
+        state.error = action.payload.errorMessage;
+      else state.error = "Something went wrong";
+    },
   },
 });
 
-export const { setDetailsPagePost, setUpdateFeedPostStatus, setDefaultPostsStatus } =
-  postsSlice.actions;
+export const {
+  setDetailsPagePost,
+  setUpdateFeedPostStatus,
+  setDefaultPostsStatus,
+} = postsSlice.actions;
 export default postsSlice.reducer;
