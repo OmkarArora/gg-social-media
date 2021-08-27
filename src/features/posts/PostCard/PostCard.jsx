@@ -92,21 +92,21 @@ export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
   }, [shouldUpdateFeedPost, dispatch]);
 
   const copyPostLink = async () => {
-    const postLink = window.location.origin + `/post/${post._id}`;
-    let message = await copyTextToClipboard(postLink);
-    dispatch(
-      showAlert({
-        type: message,
-        data:
-          message === "success"
-            ? "Post link copied to clipboard"
-            : "Something went wrong",
-      })
-    );
+      const postLink = window.location.origin + `/post/${post._id}`;
+      let message = await copyTextToClipboard(postLink);
+      dispatch(
+        showAlert({
+          type: message,
+          data:
+            message === "success"
+              ? "Post link copied to clipboard"
+              : "Something went wrong",
+        })
+      );
   };
 
   const onClickDeletePost = () => {
-    dispatch(deletePost(post._id));
+    if (post) dispatch(deletePost(post._id));
   };
 
   return (
@@ -151,17 +151,19 @@ export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
           </div>
         </Link>
       </div>
-      <div className="container-post-actions text-grey">
-        {isUserLoggedIn && getHeartIcon()}
-        <span className="icon" onClick={copyPostLink}>
-          <AiOutlineLink />
-        </span>
-        {post && post.author && post.author._id === userData._id && (
-          <span className="icon" onClick={onClickDeletePost}>
-            <AiOutlineDelete />
+      {post && post._id && (
+        <div className="container-post-actions text-grey">
+          {isUserLoggedIn && getHeartIcon()}
+          <span className="icon" onClick={copyPostLink}>
+            <AiOutlineLink />
           </span>
-        )}
-      </div>
+          {isUserLoggedIn && post.author && post.author._id === userData._id && (
+            <span className="icon" onClick={onClickDeletePost}>
+              <AiOutlineDelete />
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 };

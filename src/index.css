@@ -41,10 +41,6 @@ body {
   height: 100%;
 }
 
-.text-grey {
-  color: var(--grey-color);
-}
-
 .avatar-custom .shoto-avatar-fallback {
   font-size: 1rem !important;
   color: var(--primary-bg-color);

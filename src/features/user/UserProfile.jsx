@@ -1,11 +1,12 @@
-import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
   addPost,
   fetchUserFromUsername,
   likePost,
   unlikePost,
-  deletePost
+  deletePost,
 } from "./userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./userSlice";
@@ -29,6 +30,7 @@ export const UserProfile = () => {
   const { username } = useParams();
   const { state } = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { user, status: userStatus } = useSelector((state) => state.user);
   const { posts: feed } = useSelector((state) => state.posts);
@@ -88,7 +90,7 @@ export const UserProfile = () => {
 
   return (
     <div className="container-userProfile">
-      {(status === "loading" || userStatus==="loading") && <LoadingModal />}
+      {(status === "loading" || userStatus === "loading") && <LoadingModal />}
       {user && user.bannerImage && (
         <img src={user.bannerImage} alt="user banner" className="img-banner" />
       )}
@@ -123,6 +125,7 @@ export const UserProfile = () => {
                   onClick={() => {
                     dispatch(setDefaultPostsStatus());
                     dispatch(logoutUser());
+                    navigate("/");
                   }}
                 >
                   Log Out
