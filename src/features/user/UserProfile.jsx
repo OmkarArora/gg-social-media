@@ -29,7 +29,7 @@ export const UserProfile = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.user);
+  const { user, status: userStatus } = useSelector((state) => state.user);
   const { posts: feed } = useSelector((state) => state.posts);
   const { userData: loggedInUser, status } = useSelector((state) => state.auth);
   const [editProfileModalOpen, setEditProfileModal] = useState(false);
@@ -87,7 +87,7 @@ export const UserProfile = () => {
 
   return (
     <div className="container-userProfile">
-      {status === "loading" && <LoadingModal />}
+      {(status === "loading" || userStatus==="loading") && <LoadingModal />}
       {user && user.bannerImage && (
         <img src={user.bannerImage} alt="user banner" className="img-banner" />
       )}
