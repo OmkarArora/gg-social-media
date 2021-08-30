@@ -80,8 +80,8 @@ export const unlikePost = createAsyncThunk(
   }
 );
 
-export const deletePost = createAsyncThunk(
-  "posts/deletPost",
+export const deleteFeedPost = createAsyncThunk(
+  "posts/deletFeedPost",
   async (postId, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
@@ -164,6 +164,9 @@ export const postsSlice = createSlice({
       state.posts = state.posts.map((post) =>
         post._id === updatedPost._id ? updatedPost : post
       );
+      if(state.detailsPagePost!==null && updatedPost._id === state.detailsPagePost._id){
+        state.detailsPagePost = updatedPost;
+      }
       state.status = "fulfilled";
     },
     [likePost.rejected]: (state, action) => {
@@ -180,6 +183,9 @@ export const postsSlice = createSlice({
       state.posts = state.posts.map((post) =>
         post._id === updatedPost._id ? updatedPost : post
       );
+      if(state.detailsPagePost!==null && updatedPost._id === state.detailsPagePost._id){
+        state.detailsPagePost = updatedPost;
+      }
       state.status = "fulfilled";
     },
     [unlikePost.rejected]: (state, action) => {
@@ -188,15 +194,18 @@ export const postsSlice = createSlice({
         state.error = action.payload.errorMessage;
       else state.error = "Something went wrong";
     },
-    [deletePost.pending]: (state) => {
+    [deleteFeedPost.pending]: (state) => {
       state.status = "loading";
     },
-    [deletePost.fulfilled]: (state, action) => {
+    [deleteFeedPost.fulfilled]: (state, action) => {
       const deletedPost = action.payload.post;
       state.posts = state.posts.filter((post) => deletedPost._id !== post._id);
+      if(state.detailsPagePost!==null && deletedPost._id === state.detailsPagePost._id){
+        state.detailsPagePost = null;
+      }
       state.status = "fulfilled";
     },
-    [deletePost.rejected]: (state, action) => {
+    [deleteFeedPost.rejected]: (state, action) => {
       state.status = "error";
       if (action.payload && action.payload.errorMessage)
         state.error = action.payload.errorMessage;

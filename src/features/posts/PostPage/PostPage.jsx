@@ -1,15 +1,25 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { setDetailsPagePost, fetchPostDetails } from "../postsSlice";
+import {
+  setDetailsPagePost,
+  fetchPostDetails,
+  deleteFeedPost,
+  likePost,
+  unlikePost,
+} from "../postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "../PostCard/PostCard";
 import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
-import { likePost, unlikePost, deletePost } from "../../user/userSlice";
+import { fetchUserFromUsername } from "../../user/userSlice";
+
+import { PostNotFound } from "../PostNotFound/PostNotFound";
 
 export const PostPage = () => {
   const { postId } = useParams();
   const { state } = useLocation();
   const { detailsPagePost, status } = useSelector((state) => state.posts);
+  const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,15 +32,22 @@ export const PostPage = () => {
     }
   }, [dispatch, state, postId]);
 
+  useEffect(() => {
+    if (isUserLoggedIn && !user) {
+      if (userData) dispatch(fetchUserFromUsername(userData.username));
+    }
+  });
+
   return (
     <div className="container-postDetails-page">
       {status === "loading" && <LoadingModal />}
+      {detailsPagePost === null && <PostNotFound />}
       {detailsPagePost && (
         <PostCard
           post={detailsPagePost}
           likePost={likePost}
           unlikePost={unlikePost}
-          deletePost={deletePost}
+          deletePost={deleteFeedPost}
         />
       )}
     </div>
