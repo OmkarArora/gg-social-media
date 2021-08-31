@@ -41,7 +41,7 @@ export const PostPage = () => {
   return (
     <div className="container-postDetails-page">
       {status === "loading" && <LoadingModal />}
-      {detailsPagePost === null && <PostNotFound />}
+      {status !== "loading" && detailsPagePost === null && <PostNotFound />}
       {detailsPagePost && (
         <PostCard
           post={detailsPagePost}
