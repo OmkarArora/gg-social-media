@@ -9,10 +9,10 @@ import {
 } from "../postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "../PostCard/PostCard";
-import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
 import { fetchUserFromUsername } from "../../user/userSlice";
 
 import { PostNotFound } from "../PostNotFound/PostNotFound";
+import { PostSkeleton } from "../PostSkeleton/PostSkeleton";
 
 export const PostPage = () => {
   const { postId } = useParams();
@@ -40,7 +40,7 @@ export const PostPage = () => {
 
   return (
     <div className="container-postDetails-page">
-      {status === "loading" && <LoadingModal />}
+      {status === "loading" && <PostSkeleton/>}
       {status !== "loading" && detailsPagePost === null && <PostNotFound />}
       {detailsPagePost && (
         <PostCard

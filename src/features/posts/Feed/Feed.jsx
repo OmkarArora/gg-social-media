@@ -2,11 +2,16 @@ import { useEffect } from "react";
 import { Button } from "shoto-ui";
 import { RiQuillPenFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, likePost, unlikePost, deleteFeedPost } from "../postsSlice";
+import {
+  fetchPosts,
+  likePost,
+  unlikePost,
+  deleteFeedPost,
+} from "../postsSlice";
 import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
 import { setupAuthHeaderForServiceCalls } from "../../../helper";
-import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
+import { PostSkeleton } from "../PostSkeleton/PostSkeleton";
 import "./feed.css";
 
 export const Feed = ({ setNewPostModalVisibility }) => {
@@ -33,10 +38,14 @@ export const Feed = ({ setNewPostModalVisibility }) => {
       {status === "error" && error && (
         <div style={{ color: "red" }}>{error}</div>
       )}
-      {status === "loading" && <LoadingModal />}
       <div className="page-heading">Feed</div>
       <div className="posts-list">
-        {posts.length > 0 ? (
+        {status === "loading" ? (
+          <>
+            <PostSkeleton />
+            <PostSkeleton />
+          </>
+        ) : posts.length > 0 ? (
           posts.map((post) => (
             <PostCard
               post={post}
