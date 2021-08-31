@@ -98,6 +98,7 @@ export const postsSlice = createSlice({
   name: "posts",
   initialState: {
     status: "idle",
+    firstLoad: true,
     error: null,
     posts: [],
     detailsPagePost: null,
@@ -115,6 +116,9 @@ export const postsSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
+    setFirstLoadStatus: (state, action) => {
+      state.firstLoad = action.payload.firstLoad;
+    },
   },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
@@ -122,6 +126,7 @@ export const postsSlice = createSlice({
     },
     [fetchPosts.fulfilled]: (state, action) => {
       state.posts = action.payload.feed;
+      state.firstLoad = false;
       state.status = "fulfilled";
     },
     [fetchPosts.rejected]: (state, action) => {
@@ -218,5 +223,6 @@ export const {
   setDetailsPagePost,
   setUpdateFeedPostStatus,
   setDefaultPostsStatus,
+  setFirstLoadStatus
 } = postsSlice.actions;
 export default postsSlice.reducer;

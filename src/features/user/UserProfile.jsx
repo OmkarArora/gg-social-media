@@ -90,160 +90,169 @@ export const UserProfile = () => {
 
   return (
     <div className="container-userProfile">
-      {(status === "loading" || userStatus === "loading") && <LoadingModal />}
-      {user && user.bannerImage && (
-        <img src={user.bannerImage} alt="user banner" className="img-banner" />
-      )}
-      {user && !user.bannerImage && (
-        <div className="banner-placeholder">{user.name}</div>
-      )}
-      <div className="container-userInfo">
-        <div className="profile-toprow">
-          <div className="container-avatar">
-            <Avatar
-              alt={user?.name}
-              src={getProfileImage(user)}
-              height="5rem"
-              width="5rem"
-              key={user && user._id}
+      {status === "loading" || userStatus === "loading" ? (
+        <LoadingModal />
+      ) : (
+        <>
+          {user && user.bannerImage && (
+            <img
+              src={user.bannerImage}
+              alt="user banner"
+              className="img-banner"
             />
-          </div>
-          {loggedInUser && user && loggedInUser._id === user._id && (
-            <div className="profile-action-buttons">
-              <Button
-                rounded
-                size="medium"
-                onClick={() => setEditProfileModal((prev) => !prev)}
-              >
-                Edit Profile
-              </Button>
+          )}
+          {user && !user.bannerImage && (
+            <div className="banner-placeholder">{user.name}</div>
+          )}
+          <div className="container-userInfo">
+            <div className="profile-toprow">
+              <div className="container-avatar">
+                <Avatar
+                  alt={user?.name}
+                  src={getProfileImage(user)}
+                  height="5rem"
+                  width="5rem"
+                  key={user && user._id}
+                />
+              </div>
+              {loggedInUser && user && loggedInUser._id === user._id && (
+                <div className="profile-action-buttons">
+                  <Button
+                    rounded
+                    size="medium"
+                    onClick={() => setEditProfileModal((prev) => !prev)}
+                  >
+                    Edit Profile
+                  </Button>
 
-              <div className="button-outline">
-                <Button
-                  rounded
-                  size="medium"
-                  onClick={() => {
-                    dispatch(setDefaultPostsStatus());
-                    dispatch(logoutUser());
-                    navigate("/");
-                  }}
-                >
-                  Log Out
-                </Button>
+                  <div className="button-outline">
+                    <Button
+                      rounded
+                      size="medium"
+                      onClick={() => {
+                        dispatch(setDefaultPostsStatus());
+                        dispatch(logoutUser());
+                        navigate("/");
+                      }}
+                    >
+                      Log Out
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {loggedInUser && user && loggedInUser._id !== user._id ? (
+                loggedInUser.following.includes(user._id) ? (
+                  <Button
+                    rounded
+                    size="medium"
+                    onClick={() => dispatch(unfollowUser(user._id))}
+                  >
+                    Following
+                  </Button>
+                ) : (
+                  <span className="button-outline">
+                    <Button
+                      rounded
+                      size="medium"
+                      onClick={() => dispatch(followUser(user._id))}
+                    >
+                      Follow
+                    </Button>
+                  </span>
+                )
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="profile-name">{user?.name}</div>
+            <div className="profile-username text-grey">@{user?.username}</div>
+            {user?.bio && <div className="profile-bio">{user.bio}</div>}
+            <div className="text-grey profile-personalInfo">
+              {user?.location && (
+                <div className="container-personalInfo">
+                  <span className="icon">
+                    <HiOutlineLocationMarker />
+                  </span>
+                  <span className="info-content">{user.location}</span>
+                </div>
+              )}
+
+              {user?.website && (
+                <div className="container-personalInfo">
+                  <span className="icon">
+                    <BsLink45Deg />
+                  </span>
+                  <span className="info-content">
+                    <a href={user.website} target="_blank" rel="noreferrer">
+                      {user.website}
+                    </a>
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="text-grey profile-personalInfo">
+              {user?.birthDate && (
+                <div className="container-personalInfo">
+                  <span className="icon">
+                    <RiCake2Line />
+                  </span>
+                  <span className="info-content">
+                    {getBirthDate(user.birthDate)}
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="text-grey profile-personalInfo">
+              {user?.createdAt && (
+                <div className="container-personalInfo">
+                  <span className="icon">
+                    <RiCalendar2Line />
+                  </span>
+                  <span className="info-content">
+                    Joined{" "}
+                    {`${
+                      monthNames[new Date(user.createdAt).getMonth()]
+                    }, ${new Date(user.createdAt).getFullYear()}`}
+                  </span>
+                </div>
+              )}
+            </div>
+            <div className="profile-followDetails">
+              <div>
+                {user?.following.length}{" "}
+                <span className="text-grey">Following</span>
+              </div>
+              <div>
+                {user?.followers.length}{" "}
+                <span className="text-grey">Followers</span>
               </div>
             </div>
-          )}
-          {loggedInUser && user && loggedInUser._id !== user._id ? (
-            loggedInUser.following.includes(user._id) ? (
-              <Button
-                rounded
-                size="medium"
-                onClick={() => dispatch(unfollowUser(user._id))}
-              >
-                Following
-              </Button>
-            ) : (
-              <span className="button-outline">
-                <Button
-                  rounded
-                  size="medium"
-                  onClick={() => dispatch(followUser(user._id))}
-                >
-                  Follow
-                </Button>
-              </span>
-            )
-          ) : (
-            <></>
-          )}
-        </div>
-        <div className="profile-name">{user?.name}</div>
-        <div className="profile-username text-grey">@{user?.username}</div>
-        {user?.bio && <div className="profile-bio">{user.bio}</div>}
-        <div className="text-grey profile-personalInfo">
-          {user?.location && (
-            <div className="container-personalInfo">
-              <span className="icon">
-                <HiOutlineLocationMarker />
-              </span>
-              <span className="info-content">{user.location}</span>
-            </div>
-          )}
-
-          {user?.website && (
-            <div className="container-personalInfo">
-              <span className="icon">
-                <BsLink45Deg />
-              </span>
-              <span className="info-content">
-                <a href={user.website} target="_blank" rel="noreferrer">
-                  {user.website}
-                </a>
-              </span>
-            </div>
-          )}
-        </div>
-        <div className="text-grey profile-personalInfo">
-          {user?.birthDate && (
-            <div className="container-personalInfo">
-              <span className="icon">
-                <RiCake2Line />
-              </span>
-              <span className="info-content">
-                {getBirthDate(user.birthDate)}
-              </span>
-            </div>
-          )}
-        </div>
-        <div className="text-grey profile-personalInfo">
-          {user?.createdAt && (
-            <div className="container-personalInfo">
-              <span className="icon">
-                <RiCalendar2Line />
-              </span>
-              <span className="info-content">
-                Joined{" "}
-                {`${
-                  monthNames[new Date(user.createdAt).getMonth()]
-                }, ${new Date(user.createdAt).getFullYear()}`}
-              </span>
-            </div>
-          )}
-        </div>
-        <div className="profile-followDetails">
-          <div>
-            {user?.following.length}{" "}
-            <span className="text-grey">Following</span>
           </div>
-          <div>
-            {user?.followers.length}{" "}
-            <span className="text-grey">Followers</span>
+          <div className="profile-posts">
+            {user && user.posts.length > 0 && (
+              <div className="posts-list">
+                {user.posts &&
+                  user.posts.length > 0 &&
+                  user.posts.map((post) => (
+                    <PostCard
+                      key={post._id}
+                      post={post}
+                      likePost={likePost}
+                      unlikePost={unlikePost}
+                      deletePost={deletePost}
+                    />
+                  ))}
+              </div>
+            )}
           </div>
-        </div>
-      </div>
-      <div className="profile-posts">
-        {user && user.posts.length > 0 && (
-          <div className="posts-list">
-            {user.posts &&
-              user.posts.length > 0 &&
-              user.posts.map((post) => (
-                <PostCard
-                  key={post._id}
-                  post={post}
-                  likePost={likePost}
-                  unlikePost={unlikePost}
-                  deletePost={deletePost}
-                />
-              ))}
-          </div>
-        )}
-      </div>
-      {editProfileModalOpen && user && (
-        <UserEditModal
-          setEditProfileModal={setEditProfileModal}
-          user={user}
-          profileImage={getProfileImage(user)}
-        />
+          {editProfileModalOpen && user && (
+            <UserEditModal
+              setEditProfileModal={setEditProfileModal}
+              user={user}
+              profileImage={getProfileImage(user)}
+            />
+          )}
+        </>
       )}
     </div>
   );

@@ -12,10 +12,13 @@ import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
 import { setupAuthHeaderForServiceCalls } from "../../../helper";
 import { PostSkeleton } from "../PostSkeleton/PostSkeleton";
+import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
 import "./feed.css";
 
 export const Feed = ({ setNewPostModalVisibility }) => {
-  const { status, error, posts } = useSelector((state) => state.posts);
+  const { status, error, posts, firstLoad } = useSelector(
+    (state) => state.posts
+  );
   const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -38,9 +41,10 @@ export const Feed = ({ setNewPostModalVisibility }) => {
       {status === "error" && error && (
         <div style={{ color: "red" }}>{error}</div>
       )}
+      {status==="loading" && !firstLoad && <LoadingModal/>}
       <div className="page-heading">Feed</div>
       <div className="posts-list">
-        {status === "loading" ? (
+        {status === "loading" && firstLoad ? (
           <>
             <PostSkeleton />
             <PostSkeleton />
