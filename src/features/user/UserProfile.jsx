@@ -33,7 +33,9 @@ export const UserProfile = () => {
   const navigate = useNavigate();
 
   const { user, status: userStatus } = useSelector((state) => state.user);
-  const { posts: feed } = useSelector((state) => state.posts);
+  const { posts: feed, status: postsStatus } = useSelector(
+    (state) => state.posts
+  );
   const { userData: loggedInUser, status } = useSelector((state) => state.auth);
   const [editProfileModalOpen, setEditProfileModal] = useState(false);
 
@@ -90,7 +92,9 @@ export const UserProfile = () => {
 
   return (
     <div className="container-userProfile">
-      {status === "loading" || userStatus === "loading" ? (
+      {status === "loading" ||
+      userStatus === "loading" ||
+      postsStatus === "loading" ? (
         <LoadingModal />
       ) : (
         <>

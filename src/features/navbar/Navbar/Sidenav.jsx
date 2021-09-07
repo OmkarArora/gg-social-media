@@ -6,7 +6,11 @@ import { Link } from "react-router-dom";
 import { getProfileImage } from "../../../helper";
 
 export const Sidenav = ({ setNewPostModalVisibility }) => {
-  const { userData: user, isUserLoggedIn } = useSelector((state) => state.auth);
+  const {
+    userData: user,
+    isUserLoggedIn,
+    status,
+  } = useSelector((state) => state.auth);
 
   return (
     <div className="sidenav">
@@ -22,6 +26,7 @@ export const Sidenav = ({ setNewPostModalVisibility }) => {
               rounded
               size="large"
               onClick={() => setNewPostModalVisibility(true)}
+              disabled={status === "loading"}
             >
               New Post
             </Button>

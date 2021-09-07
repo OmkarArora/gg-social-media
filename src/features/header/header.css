@@ -5,3 +5,8 @@
   align-items: center;
   padding: 0 0.5rem;
 }
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}

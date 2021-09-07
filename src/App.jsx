@@ -15,7 +15,7 @@ import {
   PostPage,
   NewPostModal,
   setLoginDetails,
-  logoutUser
+  logoutUser,
 } from "./features";
 import axios from "axios";
 import PrivateRoute from "./PrivateRoute";

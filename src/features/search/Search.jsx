@@ -15,6 +15,8 @@ export const Search = () => {
   const [isNewPostModalVisible, setNewPostModalVisibility] = useState(false);
   const [searchText, setSearchText] = useState("");
   const { searchResults, status } = useSelector((state) => state.search);
+  const { status: feedStatus } = useSelector((state) => state.posts);
+  const { status: authStatus } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(setActiveNavTab({ activeTab: "search" }));
@@ -73,11 +75,13 @@ export const Search = () => {
           </div>
         )
       )}
-      <div className="container-fab">
-        <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
-          <RiQuillPenFill />
-        </Button>
-      </div>
+      {feedStatus !== "loading" && authStatus !== "loading" && (
+        <div className="container-fab">
+          <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
+            <RiQuillPenFill />
+          </Button>
+        </div>
+      )}
       {isNewPostModalVisible && (
         <NewPostModal onClose={() => setNewPostModalVisibility(false)} />
       )}

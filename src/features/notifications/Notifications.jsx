@@ -7,8 +7,12 @@ import { NotificationCard } from "./NotificationCard/NotificationCard";
 
 export const Notifications = ({ setNewPostModalVisibility }) => {
   const dispatch = useDispatch();
-  const { userData } = useSelector((state) => state.auth);
-  let notifications = userData.notifications;
+  const { userData, status: authStatus } = useSelector((state) => state.auth);
+  const { status: feedStatus } = useSelector((state) => state.posts);
+
+  let notifications = [];
+  if (userData && userData.notifications)
+    notifications = userData.notifications;
 
   useEffect(() => {
     dispatch(setActiveNavTab({ activeTab: "notifications" }));
@@ -26,12 +30,13 @@ export const Notifications = ({ setNewPostModalVisibility }) => {
       ) : (
         <div className="placeholder-text">Nothing to see here</div>
       )}
-
-      <div className="container-fab">
-        <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
-          <RiQuillPenFill />
-        </Button>
-      </div>
+      {feedStatus !== "loading" && authStatus !== "loading" && (
+        <div className="container-fab">
+          <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
+            <RiQuillPenFill />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

@@ -119,6 +119,10 @@ export const postsSlice = createSlice({
     setFirstLoadStatus: (state, action) => {
       state.firstLoad = action.payload.firstLoad;
     },
+    setFeedPosts: (state, action) => {
+      state.posts = action.payload.posts;
+      state.status = "fulfilled";
+    },
   },
   extraReducers: {
     [fetchPosts.pending]: (state) => {
@@ -153,6 +157,7 @@ export const postsSlice = createSlice({
     },
     [fetchPostDetails.fulfilled]: (state, action) => {
       state.detailsPagePost = action.payload.post;
+      state.firstLoad = false;
       state.status = "fulfilled";
     },
     [fetchPostDetails.rejected]: (state, action) => {
@@ -169,7 +174,10 @@ export const postsSlice = createSlice({
       state.posts = state.posts.map((post) =>
         post._id === updatedPost._id ? updatedPost : post
       );
-      if(state.detailsPagePost!==null && updatedPost._id === state.detailsPagePost._id){
+      if (
+        state.detailsPagePost !== null &&
+        updatedPost._id === state.detailsPagePost._id
+      ) {
         state.detailsPagePost = updatedPost;
       }
       state.status = "fulfilled";
@@ -188,7 +196,10 @@ export const postsSlice = createSlice({
       state.posts = state.posts.map((post) =>
         post._id === updatedPost._id ? updatedPost : post
       );
-      if(state.detailsPagePost!==null && updatedPost._id === state.detailsPagePost._id){
+      if (
+        state.detailsPagePost !== null &&
+        updatedPost._id === state.detailsPagePost._id
+      ) {
         state.detailsPagePost = updatedPost;
       }
       state.status = "fulfilled";
@@ -205,7 +216,10 @@ export const postsSlice = createSlice({
     [deleteFeedPost.fulfilled]: (state, action) => {
       const deletedPost = action.payload.post;
       state.posts = state.posts.filter((post) => deletedPost._id !== post._id);
-      if(state.detailsPagePost!==null && deletedPost._id === state.detailsPagePost._id){
+      if (
+        state.detailsPagePost !== null &&
+        deletedPost._id === state.detailsPagePost._id
+      ) {
         state.detailsPagePost = null;
       }
       state.status = "fulfilled";
@@ -223,6 +237,7 @@ export const {
   setDetailsPagePost,
   setUpdateFeedPostStatus,
   setDefaultPostsStatus,
-  setFirstLoadStatus
+  setFirstLoadStatus,
+  setFeedPosts,
 } = postsSlice.actions;
 export default postsSlice.reducer;

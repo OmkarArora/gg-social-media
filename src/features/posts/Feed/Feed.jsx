@@ -7,6 +7,8 @@ import {
   likePost,
   unlikePost,
   deleteFeedPost,
+  setFeedPosts,
+  setFirstLoadStatus,
 } from "../postsSlice";
 import { PostCard } from "../PostCard/PostCard";
 import { setActiveNavTab } from "../../navbar/navSlice";
@@ -19,7 +21,11 @@ export const Feed = ({ setNewPostModalVisibility }) => {
   const { status, error, posts, firstLoad } = useSelector(
     (state) => state.posts
   );
-  const { token } = useSelector((state) => state.auth);
+  const {
+    token,
+    userData,
+    status: authStatus,
+  } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -28,23 +34,41 @@ export const Feed = ({ setNewPostModalVisibility }) => {
       if (token) {
         setupAuthHeaderForServiceCalls(token);
       }
-      dispatch(fetchPosts());
+      if (userData && userData.feed) {
+        dispatch(setFeedPosts({ posts: userData.feed }));
+        dispatch(setFirstLoadStatus({ firstLoad: false }));
+      }
     }
-  }, [token, status, dispatch]);
+  }, [token, userData, status, dispatch]);
 
   useEffect(() => {
     dispatch(setActiveNavTab({ activeTab: "home" }));
   });
+
+  const refreshFeed = () => {
+    dispatch(fetchPosts());
+  };
 
   return (
     <div className="container-main-content">
       {status === "error" && error && (
         <div style={{ color: "red" }}>{error}</div>
       )}
-      {status==="loading" && !firstLoad && <LoadingModal/>}
-      <div className="page-heading">Feed</div>
+      {status === "loading" && !firstLoad && <LoadingModal />}
+      <div className="page-heading">
+        Feed
+        {authStatus !== "loading" && (
+          <Button
+            rounded
+            bgColor="var(--dark-grey-color)"
+            onClick={refreshFeed}
+          >
+            Refresh Feed
+          </Button>
+        )}
+      </div>
       <div className="posts-list">
-        {status === "loading" && firstLoad ? (
+        {(status === "loading" || status === "idle") && firstLoad ? (
           <>
             <PostSkeleton />
             <PostSkeleton />
@@ -65,11 +89,13 @@ export const Feed = ({ setNewPostModalVisibility }) => {
           </div>
         )}
       </div>
-      <div className="container-fab">
-        <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
-          <RiQuillPenFill />
-        </Button>
-      </div>
+      {status !== "loading" && authStatus !== "loading" && (
+        <div className="container-fab">
+          <Button type="icon" onClick={() => setNewPostModalVisibility(true)}>
+            <RiQuillPenFill />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

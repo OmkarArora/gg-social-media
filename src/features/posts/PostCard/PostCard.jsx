@@ -21,7 +21,9 @@ export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
   const { userData, shouldUpdatePost, isUserLoggedIn } = useSelector(
     (state) => state.auth
   );
-  const { shouldUpdateFeedPost } = useSelector((state) => state.posts);
+  const { shouldUpdateFeedPost, status: postsStatus } = useSelector(
+    (state) => state.posts
+  );
   const dispatch = useDispatch();
 
   const getHeartIcon = () => {
@@ -84,12 +86,12 @@ export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
     }
   }, [userData, shouldUpdatePost, dispatch]);
 
-  useEffect(() => {
-    if (shouldUpdateFeedPost) {
-      dispatch(fetchPosts());
-      dispatch(setUpdateFeedPostStatus({ updateStatus: false }));
-    }
-  }, [shouldUpdateFeedPost, dispatch]);
+  // useEffect(() => {
+  //   if (shouldUpdateFeedPost && postsStatus !== "loading") {
+  //     dispatch(fetchPosts());
+  //     dispatch(setUpdateFeedPostStatus({ updateStatus: false }));
+  //   }
+  // }, [shouldUpdateFeedPost, postsStatus, dispatch]);
 
   const copyPostLink = async () => {
     const postLink = window.location.origin + `/post/${post._id}`;
@@ -158,11 +160,15 @@ export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
             <AiOutlineLink />
           </span>
         )}
-        {isUserLoggedIn && userData && post && post.author && post.author._id === userData._id && (
-          <span className="icon" onClick={onClickDeletePost}>
-            <AiOutlineDelete />
-          </span>
-        )}
+        {isUserLoggedIn &&
+          userData &&
+          post &&
+          post.author &&
+          post.author._id === userData._id && (
+            <span className="icon" onClick={onClickDeletePost}>
+              <AiOutlineDelete />
+            </span>
+          )}
       </div>
     </div>
   );

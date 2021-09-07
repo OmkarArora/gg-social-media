@@ -10,14 +10,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "../PostCard/PostCard";
 import { fetchUserFromUsername } from "../../user/userSlice";
-
 import { PostNotFound } from "../PostNotFound/PostNotFound";
 import { PostSkeleton } from "../PostSkeleton/PostSkeleton";
+import { LoadingModal } from "../../loader/LoadingModal/LoadingModal";
 
 export const PostPage = () => {
   const { postId } = useParams();
   const { state } = useLocation();
-  const { detailsPagePost, status } = useSelector((state) => state.posts);
+  const { detailsPagePost, firstLoad, status } = useSelector(
+    (state) => state.posts
+  );
   const { isUserLoggedIn, userData } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -40,7 +42,8 @@ export const PostPage = () => {
 
   return (
     <div className="container-postDetails-page">
-      {status === "loading" && <PostSkeleton/>}
+      {status === "loading" && firstLoad && <PostSkeleton />}
+      {status === "loading" && !firstLoad && <LoadingModal />}
       {status !== "loading" && detailsPagePost === null && <PostNotFound />}
       {detailsPagePost && (
         <PostCard
