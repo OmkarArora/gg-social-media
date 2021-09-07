@@ -13,7 +13,7 @@ import {
   refreshFromUsername,
   setUpdatePostStatus,
 } from "../../authentication/authSlice";
-import { fetchPosts, setUpdateFeedPostStatus } from "../../posts/postsSlice";
+import { setUpdateFeedPostStatus } from "../../posts/postsSlice";
 import { showAlert } from "../../alert/alertSlice";
 import "./postcard.css";
 
@@ -21,9 +21,7 @@ export const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
   const { userData, shouldUpdatePost, isUserLoggedIn } = useSelector(
     (state) => state.auth
   );
-  const { shouldUpdateFeedPost, status: postsStatus } = useSelector(
-    (state) => state.posts
-  );
+
   const dispatch = useDispatch();
 
   const getHeartIcon = () => {
